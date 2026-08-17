@@ -45,13 +45,17 @@ void main() {
       normal += roughness * random3(stepify(worldPos, stepSize));
       normal = normalize(normal);
 
-      vec4 reflectionColor = getReflectionColor(depth, normal, viewPos);
+      // when underwater looking up at the water surface from below,
+      // there is nothing to reflect, so skip the reflection entirely
+      if (isEyeInWater == 0 || feetPos.y <= 0.0) {
+         vec4 reflectionColor = getReflectionColor(depth, normal, viewPos);
 
-      color.rgb = mix(
-         color.rgb,
-         reflectionColor.rgb,
-         reflectionColor.a * reflectivity * 0.1*REFLECTIONS
-      );
+         color.rgb = mix(
+            color.rgb,
+            reflectionColor.rgb,
+            reflectionColor.a * reflectivity * 0.1*REFLECTIONS
+         );
+      }
    }
 
    gl_FragData[0] = color;
