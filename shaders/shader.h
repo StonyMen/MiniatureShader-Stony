@@ -26,8 +26,8 @@
 // profile of shaders.properties - keep the two in sync
 #define BLOCK_REFLECTIONS 5          //[0 1 2 3 4 5 6 7 8 9 10]
 #define WATER_REFLECTION_STRENGTH 5  //[0 1 2 3 4 5 6 7 8 9 10]
-#define SSR_MAX_STEPS 10     //[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 24 32 64 96 128 256 512]
-#define SSR_STEP_SIZE 1.6    //[0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+#define SSR_MAX_STEPS 10     //[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 20 24 32 64 96 128 256 512]
+#define SSR_STEP_SIZE 1.5    //[0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
 #define SSR_BINARY_STEPS 4   //[1 2 3 4 5 6 7 8 9 10]
 
 #define SHADOW_PIXEL 16     //[0 4 8 16 32 64 128 256 512 1024 2048]
@@ -70,10 +70,10 @@ const float sunPathRotation = -30.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.
 #define CLOUD_HEIGHT 192.0
 #define CLOUD_THICKNESS 4.0
 
-#define END_STARS_SPEED  0.05  //[0.002 0.005 0.01 0.02 0.05 0.1 0.5]
-#define END_STARS_AMOUNT 256.0 //[128.0 256.0 512.0 1024.0 2048.0]
+#define END_STARS_SPEED  0.01  //[0.002 0.005 0.01 0.02 0.05 0.1 0.5]
+#define END_STARS_AMOUNT 128.0 //[128.0 256.0 512.0 1024.0 2048.0]
 #define END_STARS_FLOOR  256.0
-#define END_STARS_OPACITY 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
+#define END_STARS_OPACITY 0.5 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
 
 #define FLAT_LIGHTING
 #define GLOWING_ORES
