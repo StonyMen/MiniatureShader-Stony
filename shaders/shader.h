@@ -33,6 +33,12 @@
 #define SHADOW_PIXEL 16     //[0 4 8 16 32 64 128 256 512 1024 2048]
 #define SHADOW_BLUENESS 0.2 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5]
 
+// glass, water and ice cast a shadow of their own colour, as deep as their
+// material is opaque. off goes back to opaque geometry only, where translucent
+// blocks do not block any light at all; on costs two extra shadow map lookups
+// per pixel, which is why the LOW profile leaves it off
+#define COLORED_SHADOWS 1 //[0 1]
+
 const int   shadowMapResolution = 1024;  //[256 512 1024 2048 3072 4096]
 const float shadowDistance      = 128.0; //[8.0 16.0 32.0 64.0 96.0 128.0 192.0 256.0 384.0 512.0 1024.0]
 const float shadowIntervalSize  = 7.0;  //[1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0]
@@ -127,6 +133,14 @@ const vec4 END_STARS_DRAG = vec4(200, 500, 100, 100);
 const vec3 END_AMBIENT    = vec3(0.83, 0.7, 1.0);
 
 const vec3 SHADOW_COLOR = vec3(1.0 - SHADOW_DARKNESS) + vec3(0.0, 0.3333, 1.0) * SHADOW_BLUENESS;
+
+// a translucent block does not block the light, it filters it: what reaches the
+// ground is the colour of the block, dimmed by this. 0 turns translucent blocks
+// into fully opaque casters, 1 lets the same amount of light through as comes
+// in, only recoloured. this is the value for a fully opaque pixel - a
+// transparent one scales the shadow down by its own alpha first, so a water
+// surface throws a fainter shadow than the solid frame of a glass block
+const float SHADOW_TRANSLUCENT_STRENGTH = 0.55;
 
 const float SHADOW_MAX_DIST_SQUARED = shadowDistance * shadowDistance;
 const float INV_SHADOW_MAX_DIST_SQUARED = 1.0/SHADOW_MAX_DIST_SQUARED;

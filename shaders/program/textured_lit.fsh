@@ -47,7 +47,9 @@ varying vec3 gradientFogColor;
 #ifdef ENABLE_SHADOWS
    uniform mat4 shadowModelView;
    uniform mat4 shadowProjection;
+   uniform sampler2D shadowtex0;
    uniform sampler2D shadowtex1;
+   uniform sampler2D shadowcolor0;
 
    varying vec3 lightColor;
    varying float diffuse;
@@ -102,7 +104,9 @@ void main() {
    float albedoLuma = luma(albedo.rgb);
 
    #ifdef ENABLE_SHADOWS
-      float lightStrength = getLightStrength(diffuse, lightUV.t, feetPos);
+      // a colour, not a number: a shadow under stained glass or water keeps the
+      // colour of that block, so shadowing and tinting are the same operation
+      vec3 lightStrength = getLightStrength(diffuse, lightUV.t, feetPos);
       float lightBrightness = max(0.0, LIGHT_BRIGHTNESS - 0.5*pow3(albedoLuma));
 
       lightStrength = max(lightStrength, 0.75*lightSourceLevel);
