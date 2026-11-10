@@ -6,7 +6,8 @@ profile.HIGH=High
 
 screen.WATER_SCREEN=Water
 option.WATER_BRIGHTNESS=Water brightness
-option.WATER_B=Water blueness
+option.WATER_SATURATION=Water color saturation §e[?]
+option.WATER_SATURATION.comment=0 makes the water completely colourless, 1 keeps the vanilla biome tint; brightness is preserved
 option.WATER_A=Water opacity
 option.WATER_MIN_GLINT=Water glint strength §e[?]
 option.WATER_MIN_GLINT.comment=Determines how much texture the water retains; moving water still keeps all texture

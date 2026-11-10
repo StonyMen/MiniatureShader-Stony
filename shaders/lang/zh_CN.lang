@@ -6,7 +6,8 @@ profile.HIGH=高
 
 screen.WATER_SCREEN=水面
 option.WATER_BRIGHTNESS=水面亮度
-option.WATER_B=水色偏蓝程度
+option.WATER_SATURATION=水体颜色饱和度 §e[?]
+option.WATER_SATURATION.comment=0 为完全无色（灰），1 为原版生物群系水色;不影响亮度
 option.WATER_A=水面不透明度
 option.WATER_MIN_GLINT=水面波光强度 §e[?]
 option.WATER_MIN_GLINT.comment=决定水面保留多少纹理细节;流动的水始终保留完整纹理

@@ -51,7 +51,11 @@ void main() {
          #define WATER_BUFFER albedo
       #endif
 
-      WATER_BUFFER.ba = min(WATER_BUFFER.ba, vec2(max(WATER_BUFFER.r, WATER_BUFFER.g)*WATER_B, WATER_A));
+      // The biome tint is pulled towards its own luminance: 0 leaves the water
+      // completely colourless, 1 keeps the vanilla biome colour untouched.
+      color.rgb = mix(vec3(luma(color.rgb)), color.rgb, WATER_SATURATION);
+
+      WATER_BUFFER.a = min(WATER_BUFFER.a, WATER_A);
    }
 
    ambient.rgb += getTorchColor(lightUV.s, ambient.rgb, feetPos);
