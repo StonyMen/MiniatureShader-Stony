@@ -3,51 +3,18 @@
 uniform float far;
 uniform int isEyeInWater;
 uniform sampler2D colortex0;
-uniform sampler2D colortex2;
 uniform sampler2D colortex6;
 uniform sampler2D colortex7;
 uniform sampler2D depthtex0;
-uniform sampler2D depthtex1;
-uniform vec3 fogColor;
 
 varying vec2 texUV;
 
 #include "/common/math.glsl"
 #include "/common/transformations.glsl"
-#include "/common/getClouds.fsh"
 #include "/common/getReflectionColor.fsh"
 
-// distance (in blocks) of the surface stored in the depth buffer
-float getDistance(vec2 uv, float depth) {
-   // depth 1.0 is the far plane, where the projection inverse is degenerate
-   return depth < 1.0 ? -screen2view(uv, depth).z : 1e6;
-}
-
 void main() {
-   vec3 scene       = texture2D(colortex0, texUV).rgb;
-   vec4 translucent = texture2D(colortex2, texUV); // premultiplied
-
-   // this depth doesn't contain the translucent geometry, so it can't cull the
-   // clouds, which sit behind it
-   float opaqueDepth = texture2D(depthtex1, texUV).x;
-
-   vec3 color = scene;
-
-   #ifdef OVERWORLD
-      vec3 worldDir  = normalize(view2eye(normalize(screen2view(texUV, 0.5))));
-      vec3 cloudTint = opaqueDepth > 0.9999 ? scene : fogColor;
-      vec4 cloud     = getClouds(gbufferModelViewInverse[3].xyz,
-                                 worldDir,
-                                 getDistance(texUV, opaqueDepth),
-                                 cloudTint);
-
-      color = cloud.rgb + (1.0 - cloud.a) * color;
-   #endif
-
-   // the translucent geometry is composited on top of the clouds, which is what
-   // keeps them visible through water, ice and stained glass
-   color = translucent.rgb + (1.0 - translucent.a) * color;
-
+   vec4 color = texture2D(colortex0, texUV);
    vec4 reflectivityAndRoughness = texture2D(colortex7, texUV);
    float reflectivity = reflectivityAndRoughness.x;
    float roughness = reflectivityAndRoughness.y;
@@ -92,13 +59,13 @@ void main() {
       if ((isEyeInWater == 0 || feetPos.y <= 0.0) && reflectionStrength > 0.0) {
          vec4 reflectionColor = getReflectionColor(depth, normal, viewPos);
 
-         color = mix(
-            color,
+         color.rgb = mix(
+            color.rgb,
             reflectionColor.rgb,
             min(reflectionColor.a * reflectionStrength, 1.0)
          );
       }
    }
 
-   gl_FragData[0] = vec4(color, 1.0);
+   gl_FragData[0] = color;
 }
