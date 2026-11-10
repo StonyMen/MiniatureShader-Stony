@@ -12,11 +12,6 @@ uniform int isEyeInWater;
 uniform int worldTime;
 uniform vec3 sunPosition;
 
-#ifdef HIGHLIGHT_WAXED
-   uniform int heldItemId;
-   uniform int heldItemId2;
-#endif
-
 flat varying float lightSourceLevel;
 varying float fogMix;
 varying float sunHeight;
@@ -94,10 +89,6 @@ void main() {
 
    #ifdef GLOWING_ORES
       isOre = float(mc_Entity.x == 10014.0);
-   #endif
-
-   #ifdef HIGHLIGHT_WAXED
-      color.rgb *= (heldItemId == 20007 || heldItemId2 == 20007) && mc_Entity.x == 20007.0 ? 0.4 : 1.0;
    #endif
 
    bool isThin = mc_Entity.x == 10031.0 || mc_Entity.x == 10059.0

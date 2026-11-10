@@ -86,8 +86,6 @@ option.SSR_BINARY_STEPS=Maximum refining steps
 option.SSR_STEP_SIZE=Step size
 
 screen.OTHER_SCREEN=Other
-option.HIGHLIGHT_WAXED=Highlight waxed blocks §e[?]
-option.HIGHLIGHT_WAXED.comment=Holding a honeycomb highlights waxed blocks
 option.GLOWING_ORES=Glowing ores
 option.NETHER_COLOR_GRADING=Nether color grading
 option.HAND_DYNAMIC_LIGHTING=Hand dynamic lighting

@@ -86,8 +86,6 @@ option.SSR_BINARY_STEPS=最大细化次数
 option.SSR_STEP_SIZE=步进长度
 
 screen.OTHER_SCREEN=其他
-option.HIGHLIGHT_WAXED=高亮已打蜡方块 §e[?]
-option.HIGHLIGHT_WAXED.comment=手持蜜脾时高亮已打蜡的方块
 option.GLOWING_ORES=矿石发光
 option.NETHER_COLOR_GRADING=下界色彩校正
 option.HAND_DYNAMIC_LIGHTING=手持动态光照

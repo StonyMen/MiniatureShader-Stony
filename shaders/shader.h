@@ -77,9 +77,6 @@ const float sunPathRotation = -30.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.
 
 #define FLAT_LIGHTING
 #define GLOWING_ORES
-// a real boolean: #define means on, commenting it out means off. the menu
-// shows ON/OFF instead of a numeric 0/1 list
-// #define HIGHLIGHT_WAXED
 #define SHADOW_ENTITY 1 //[-1 0 1]
 #define ENABLE_SKY
 #define NETHER_COLOR_GRADING
@@ -102,8 +99,6 @@ const float sunPathRotation = -30.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.
 #ifdef SHADOW_ENTITY
 #endif
 #ifdef NETHER_COLOR_GRADING
-#endif
-#ifdef HIGHLIGHT_WAXED
 #endif
 
 //----------------------------------------------------------------------------//
