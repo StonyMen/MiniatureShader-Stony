@@ -78,6 +78,31 @@ const float sunPathRotation = 0.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.0 
 
 //----------------------------------------------------------------------------//
 
+// the clouds are raymarched in final.fsh (see common/getClouds.fsh) instead of
+// being rendered as vanilla geometry, the layer is a slab of CLOUD_THICKNESS
+// blocks starting at CLOUD_HEIGHT, one cloud cell is CLOUD_CELL_SIZE blocks
+// wide and corresponds to a single texel of the vanilla cloud texture
+#define CLOUD_HEIGHT 192.0
+#define CLOUD_THICKNESS 4.0
+#define CLOUD_CELL_SIZE 12.0
+#define CLOUD_TEXTURE_SIZE 256.0
+#define CLOUD_DIST 1024.0
+#define CLOUD_STEPS 48
+#define CLOUD_DRIFT 0.03 // blocks per tick, towards -X (west) like vanilla
+
+// vanilla shades the faces of a cloud box differently, which is what makes the
+// layer read as a volume: the top face is the brightest, the bottom the darkest
+// and the sides sit in between. CLOUD_SIDE_SUN is how much brighter the sides
+// facing the sun are than the ones in the shade
+#define CLOUD_TOP_SHADE 1.0
+#define CLOUD_SIDE_SHADE 0.84
+#define CLOUD_BOTTOM_SHADE 0.68
+#define CLOUD_SIDE_SUN 0.10
+
+// vanilla keeps the clouds slightly lit even at midnight, otherwise the sky
+// color alone would make them disappear into the black sky
+#define CLOUD_NIGHT_LIGHT vec3(0.18, 0.19, 0.26)
+
 #define MIN_REFLECTIVITY 0.01
 #define WATER_REFLECTIVITY 0.99
 #define GLASS_REFLECTIVITY 0.3

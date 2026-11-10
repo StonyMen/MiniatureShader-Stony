@@ -66,7 +66,11 @@ void main() {
 
    albedo.rgb = mix(albedo.rgb, gradientFogColor, fogMix);
 
-   /* DRAWBUFFERS:067 */
+   // The translucent geometry is not blended into colortex0 anymore: it is
+   // accumulated into colortex2 (with the regular translucency blending, which
+   // yields premultiplied alpha on a cleared buffer) and composited on top of
+   // the scene in final.fsh, after the clouds have been drawn.
+   /* DRAWBUFFERS:267 */
    gl_FragData[0] = albedo;
    gl_FragData[1] = vec4(normal, 1.0);
    gl_FragData[2] = vec4(reflectivity, 0.0, 0.5, 1.0);

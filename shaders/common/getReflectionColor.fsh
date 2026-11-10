@@ -50,9 +50,24 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
             }
          }
 
+         vec3 sceneColor = texture2D(colortex0, curUV).rgb;
+
+         #ifdef OVERWORLD
+            // the clouds are composited on top of the scene in final.fsh, so
+            // they have to be added back into the reflected image here
+            if (sceneDepth >= 1.0) {
+               vec4 cloud = getClouds(view2feet(viewPos),
+                                      normalize(view2eye(R)),
+                                      1e6,
+                                      sceneColor);
+
+               sceneColor = cloud.rgb + (1.0 - cloud.a) * sceneColor;
+            }
+         #endif
+
          return sceneDepth + 0.0001 <= depth
                ? vec4(0.0)
-               : vec4(texture2D(colortex0, curUV).rgb,
+               : vec4(sceneColor,
                       getReflectionVignette(curUV) * fresnel);
       }
 
