@@ -1,8 +1,7 @@
 #shaders/lang/en_us.lang
 
-profile.LOWEST=Lowest
 profile.LOW=Low
-profile.NORMAL=Normal
+profile.MEDIUM=Medium
 profile.HIGH=High
 
 screen.WATER_SCREEN=Water

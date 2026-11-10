@@ -1,8 +1,7 @@
 #shaders/lang/zh_cn.lang
 
-profile.LOWEST=最低
 profile.LOW=低
-profile.NORMAL=标准
+profile.MEDIUM=中
 profile.HIGH=高
 
 screen.WATER_SCREEN=水面
