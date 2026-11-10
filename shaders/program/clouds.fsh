@@ -47,13 +47,31 @@ void main() {
    // the moon takes over once the sun is down, exactly like the vanilla light
    float lightDot = max(dot(dir, sunDir), dot(dir, moonDir));
 
-   // how low the sun is decides how warm its light is: white overhead, orange
-   // on the horizon and no warmth at all during the night
+   // vanilla hands the clouds a colour that already carries the time of day,
+   // but it never says which of the two lights is the one doing the lighting,
+   // so the light itself stays white. these two colours put that back: the sun
+   // is warm, the moon is cold
    float sunHeight = (mat3(gbufferModelViewInverse) * sunDir).y;
-   float warmth = (1.0 - rescale(sunHeight, 0.0, 0.35))
-                * smoothstep(-0.1, 0.05, sunHeight);
 
-   vec3 lightColor = mix(vec3(1.0), vec3(1.0, 0.58, 0.36), warmth * CLOUD_SUN_TINT);
+   // 1 while the sun is up, 0 once it is gone and only the moon is left
+   float daylight = smoothstep(-0.08, 0.02, sunHeight);
+
+   // how low the sun is decides how warm its light is: a warm yellow overhead,
+   // orange only once it is close to the horizon. the range is kept short on
+   // purpose - spreading the warmth over the whole day turns the daylight red
+   // instead of yellow
+   float warmth = (1.0 - rescale(sunHeight, 0.0, 0.22)) * daylight;
+
+   // daylight is white with a hint of orange in it, not a yellow light: the
+   // blue channel stays high enough for the cloud to read as white
+   vec3 sunColor  = mix(vec3(1.0, 0.86, 0.74),
+                        vec3(1.0, 0.55, 0.32), warmth * CLOUD_SUN_TINT);
+
+   // the moon is a mirror of the sun seen through a lot of air, so its light
+   // arrives dim and blue instead of white
+   vec3 moonColor = vec3(0.52, 0.70, 1.0);
+
+   vec3 lightColor = mix(moonColor, sunColor, daylight);
 
    // rain and thunder put a lid on the sky: there is no sun to reach the clouds
    // any more, so they stop reacting to it and keep their flat vanilla colour
@@ -80,6 +98,13 @@ void main() {
    cloudColor += lightColor * glow * (0.3 + 0.7 * edge) * CLOUD_SILVER_LINING * clearSky;
 
    cloudColor *= 1.0 - rainStrength * CLOUD_WEATHER_DARKNESS;
+
+   // there is no tonemapper behind this pass, so everything above 1.0 is cut
+   // down to plain white and the colour of the light disappears exactly where
+   // the light is strongest. rolling the peak back to 1.0 keeps the hue, and
+   // fragments that stay below 1.0 - the whole shaded side - are left untouched
+   float peak = max(cloudColor.r, max(cloudColor.g, cloudColor.b));
+   cloudColor /= max(peak, 1.0);
 
    // the distance is measured in the vertex shader already, and it has to be
    // applied to the alpha as well: a cloud that is far enough has to dissolve
