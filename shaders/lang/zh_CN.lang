@@ -64,9 +64,10 @@ value.SHADOW_ENTITY.0=§e仅玩家
 value.SHADOW_ENTITY.1=§e全部
 
 screen.REFLECTIONS_SCREEN=反射
-option.REFLECTIONS=反射不透明度
-option.BLOCK_REFLECTIONS=方块反射不透明度 §e[?]
-option.BLOCK_REFLECTIONS.comment=为石砖、石英等方块添加反射
+option.WATER_REFLECTION_STRENGTH=水面反射强度
+option.WATER_REFLECTION_STRENGTH.comment=水面平面空间反射的强度, 与方块反射互相独立; 设为 0 即关闭水面反射
+option.BLOCK_REFLECTIONS=方块反射强度 §e[?]
+option.BLOCK_REFLECTIONS.comment=为石砖、石英等方块添加反射; 设为 0 即关闭
 option.SSR_MAX_STEPS=最大步进次数
 option.SSR_BINARY_STEPS=最大细化次数
 option.SSR_STEP_SIZE=步进长度

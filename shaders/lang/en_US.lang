@@ -64,9 +64,10 @@ value.SHADOW_ENTITY.0=§ePlayer
 value.SHADOW_ENTITY.1=§eAll
 
 screen.REFLECTIONS_SCREEN=Reflections
-option.REFLECTIONS=Reflection opacity
-option.BLOCK_REFLECTIONS=Block reflection opacity §e[?]
-option.BLOCK_REFLECTIONS.comment=Adds reflections to blocks such as stone bricks, quartz, etc.
+option.WATER_REFLECTION_STRENGTH=Water reflection strength
+option.WATER_REFLECTION_STRENGTH.comment=Strength of the screen space reflections on the water, independent of the blocks. Set to 0 to disable them.
+option.BLOCK_REFLECTIONS=Block reflection strength §e[?]
+option.BLOCK_REFLECTIONS.comment=Adds reflections to blocks such as stone bricks, quartz, etc. Set to 0 to disable them.
 option.SSR_MAX_STEPS=Maximum steps
 option.SSR_BINARY_STEPS=Maximum refining steps
 option.SSR_STEP_SIZE=Step size

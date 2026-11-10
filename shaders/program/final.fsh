@@ -78,15 +78,24 @@ void main() {
       normal += roughness * random3(stepify(worldPos, stepSize));
       normal = normalize(normal);
 
+      // the strength is set per surface: the blocks already bake
+      // BLOCK_REFLECTIONS into their reflectivity, the water has its own
+      // setting here
+      float reflectionStrength = reflectivity;
+
+      if (reflectivity > WATER_REFLECTIVITY - 0.01) {
+         reflectionStrength *= 0.1*WATER_REFLECTION_STRENGTH;
+      }
+
       // when underwater looking up at the water surface from below,
       // there is nothing to reflect, so skip the reflection entirely
-      if (isEyeInWater == 0 || feetPos.y <= 0.0) {
+      if ((isEyeInWater == 0 || feetPos.y <= 0.0) && reflectionStrength > 0.0) {
          vec4 reflectionColor = getReflectionColor(depth, normal, viewPos);
 
          color = mix(
             color,
             reflectionColor.rgb,
-            reflectionColor.a * reflectivity * 0.1*REFLECTIONS
+            min(reflectionColor.a * reflectionStrength, 1.0)
          );
       }
    }
