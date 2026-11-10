@@ -12,7 +12,7 @@ uniform int isEyeInWater;
 uniform int worldTime;
 uniform vec3 sunPosition;
 
-#if HIGHLIGHT_WAXED == 1
+#ifdef HIGHLIGHT_WAXED
    uniform int heldItemId;
    uniform int heldItemId2;
 #endif
@@ -96,7 +96,7 @@ void main() {
       isOre = float(mc_Entity.x == 10014.0);
    #endif
 
-   #if HIGHLIGHT_WAXED == 1
+   #ifdef HIGHLIGHT_WAXED
       color.rgb *= (heldItemId == 20007 || heldItemId2 == 20007) && mc_Entity.x == 20007.0 ? 0.4 : 1.0;
    #endif
 

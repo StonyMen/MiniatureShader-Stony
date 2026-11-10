@@ -3,8 +3,8 @@
 // the light that reaches a surface, as a colour instead of a single number: 1
 // is full light, 0 is full shadow. shadowtex1 only holds the opaque geometry,
 // shadowtex0 holds all of it, so when the first one is clear but the second is
-// not, the thing blocking the light is translucent - and then the colour it
-// lets through comes from shadowcolor0, which is the colour of that block
+// not, the thing blocking the light is translucent - and then shadowcolor0
+// tells us how much light it filters and, in the coloured mode, with which tint
 vec3 getLightStrength(float diffuse, float skyLight, vec3 feetPos) {
    // reduce diffuse with sky light
    diffuse *= rescale(skyLight, 0.3137, 0.6235);
@@ -35,9 +35,9 @@ vec3 getLightStrength(float diffuse, float skyLight, vec3 feetPos) {
       float shadowFade  = 1.0 - posDistance * INV_SHADOW_MAX_DIST_SQUARED;
       float depthScale  = 3.0 / shadowProjection[2].z;
 
-      // shadowtex0 holds every caster, shadowtex1 only the opaque ones. with the
-      // translucent shadows off, glass and water must not block light at all, so
-      // the opaque layer is the only one allowed to count
+      // shadowtex0 holds every caster, shadowtex1 only the opaque ones. mode 0
+      // ignores translucent casters entirely, so glass and water do not block
+      // any light and only the opaque layer is allowed to count
       #if COLORED_SHADOWS > 0
          float casterDepth = texture2D(shadowtex0, shadowUV.st).x;
       #else
@@ -64,7 +64,15 @@ vec3 getLightStrength(float diffuse, float skyLight, vec3 feetPos) {
             // instead of just tinting it
             vec4 caster = texture2D(shadowcolor0, shadowUV.st);
 
-            blocker = mix(vec3(1.0), caster.rgb * SHADOW_TRANSLUCENT_STRENGTH, caster.a);
+            // mode 2 keeps the block's tint; mode 1 keeps only its brightness,
+            // so the shadow is neutral grey but still as deep as the material
+            #if COLORED_SHADOWS == 2
+               vec3 tint = caster.rgb * SHADOW_TRANSLUCENT_STRENGTH;
+            #else
+               vec3 tint = vec3(luma(caster.rgb) * SHADOW_TRANSLUCENT_STRENGTH);
+            #endif
+
+            blocker = mix(vec3(1.0), tint, caster.a);
          }
       #endif
 

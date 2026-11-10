@@ -33,11 +33,14 @@
 #define SHADOW_PIXEL 16     //[0 4 8 16 32 64 128 256 512 1024 2048]
 #define SHADOW_BLUENESS 0.2 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5]
 
-// glass, water and ice cast a shadow of their own colour, as deep as their
-// material is opaque. off goes back to opaque geometry only, where translucent
-// blocks do not block any light at all; on costs two extra shadow map lookups
-// per pixel, which is why the LOW profile leaves it off
-#define COLORED_SHADOWS 1 //[0 1]
+// translucent casters (glass, water and ice) have three modes:
+//   0 = do not render them at all, only opaque geometry casts a shadow
+//   1 = render them, but as a neutral grey filter: the shadow is as deep as
+//       the material is opaque and carries no colour from the block
+//   2 = render them with the block's own colour, as deep as it is opaque
+// modes 1 and 2 both cost two extra shadow map lookups per pixel. each profile
+// picks one of the three: LOW 0, MEDIUM 1 (also the default here), HIGH 2
+#define COLORED_SHADOWS 1 //[0 1 2]
 
 const int   shadowMapResolution = 1024;  //[256 512 1024 2048 3072 4096]
 const float shadowDistance      = 128.0; //[8.0 16.0 32.0 64.0 96.0 128.0 192.0 256.0 384.0 512.0 1024.0]
@@ -74,7 +77,9 @@ const float sunPathRotation = -30.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.
 
 #define FLAT_LIGHTING
 #define GLOWING_ORES
-#define HIGHLIGHT_WAXED 0 //[0 1]
+// a real boolean: #define means on, commenting it out means off. the menu
+// shows ON/OFF instead of a numeric 0/1 list
+// #define HIGHLIGHT_WAXED
 #define SHADOW_ENTITY 1 //[-1 0 1]
 #define ENABLE_SKY
 #define NETHER_COLOR_GRADING
@@ -97,6 +102,8 @@ const float sunPathRotation = -30.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.
 #ifdef SHADOW_ENTITY
 #endif
 #ifdef NETHER_COLOR_GRADING
+#endif
+#ifdef HIGHLIGHT_WAXED
 #endif
 
 //----------------------------------------------------------------------------//
@@ -135,11 +142,12 @@ const vec3 END_AMBIENT    = vec3(0.83, 0.7, 1.0);
 const vec3 SHADOW_COLOR = vec3(1.0 - SHADOW_DARKNESS) + vec3(0.0, 0.3333, 1.0) * SHADOW_BLUENESS;
 
 // a translucent block does not block the light, it filters it: what reaches the
-// ground is the colour of the block, dimmed by this. 0 turns translucent blocks
-// into fully opaque casters, 1 lets the same amount of light through as comes
-// in, only recoloured. this is the value for a fully opaque pixel - a
-// transparent one scales the shadow down by its own alpha first, so a water
-// surface throws a fainter shadow than the solid frame of a glass block
+// ground is the colour of the block, dimmed by this. mode 2 uses that colour,
+// mode 1 only its luminance, so both darken by the same amount and only mode 2
+// tints. 0 would turn translucent blocks into fully opaque casters, 1 would let
+// the same amount of light through as comes in. this is the value for a fully
+// opaque pixel - a transparent one scales the shadow down by its own alpha
+// first, so a water surface throws a fainter shadow than a glass frame
 const float SHADOW_TRANSLUCENT_STRENGTH = 0.55;
 
 const float SHADOW_MAX_DIST_SQUARED = shadowDistance * shadowDistance;
