@@ -1,0 +1,82 @@
+#shaders/lang/zh_cn.lang
+
+profile.LOWEST=最低
+profile.LOW=低
+profile.NORMAL=标准
+profile.HIGH=高
+
+screen.WATER_SCREEN=水面
+option.WATER_BRIGHTNESS=水面亮度
+option.WATER_B=水色偏蓝程度
+option.WATER_A=水面不透明度
+option.WATER_MIN_GLINT=水面波光强度 §e[?]
+option.WATER_MIN_GLINT.comment=决定水面保留多少纹理细节;流动的水始终保留完整纹理
+option.WATER_GLINT_BRIGHTNESS=水面波光亮度
+option.WATER_GLINT_CUTOFF=水面波光阈值
+option.WATER_WAVE_SIZE=波浪大小
+option.WATER_WAVE_SPEED=波浪速度
+
+screen.COLORS_SCREEN=颜色
+option.TORCH_INNER_R=火把内圈 §c红
+option.TORCH_INNER_G=火把内圈 §2绿
+option.TORCH_INNER_B=火把内圈 §9蓝
+option.TORCH_MIDDLE_R=火把中圈 §c红
+option.TORCH_MIDDLE_G=火把中圈 §2绿
+option.TORCH_MIDDLE_B=火把中圈 §9蓝
+option.TORCH_OUTER_R=火把外圈 §c红
+option.TORCH_OUTER_G=火把外圈 §2绿
+option.TORCH_OUTER_B=火把外圈 §9蓝
+option.MOON_R=月亮 §c红
+option.MOON_G=月亮 §2绿
+option.MOON_B=月亮 §9蓝
+
+screen.ATMOSPHERE_SCREEN=大气
+option.ENABLE_FOG=启用雾
+option.WEATHER_OPACITY=天气效果不透明度
+option.ENABLE_SKY=启用天空 §e[?]
+option.ENABLE_SKY.comment=如果你使用了天空资源包,请关闭此选项
+option.OVERWORLD_FOG_MAX_SLIDER=主世界过渡雾 §e[?]
+option.OVERWORLD_FOG_MAX_SLIDER.comment=日出和日落时的雾浓度
+option.OVERWORLD_FOG_MIN_SLIDER=主世界雾浓度
+option.END_STARS_SPEED=末地星辰移动速度
+option.END_STARS_AMOUNT=末地星辰数量
+option.END_STARS_OPACITY=末地星辰不透明度
+
+screen.SHADOWS_SCREEN=阴影
+option.SHADOW_BLUENESS=阴影蓝色程度
+option.shadowDistance=阴影距离
+option.shadowMapResolution=阴影分辨率
+option.shadowIntervalSize=阴影重聚焦间隔 §e[?]
+option.shadowIntervalSize.comment=阴影每隔多少格重新以玩家为中心进行一次聚焦
+option.entityShadowDistanceMul=实体阴影距离 §e[?]
+option.entityShadowDistanceMul.comment=以阴影距离的百分比计算
+option.SHADOW_PIXEL=阴影像素化
+option.LIGHT_BRIGHTNESS=阳光亮度
+option.sunPathRotation=太阳轨道倾角 §e[!]
+option.sunPathRotation.comment=Miniature 的设计前提是阴影笔直,修改此值可能产生画面瑕疵
+option.SHADOW_DARKNESS=阴影深度
+option.FLAT_LIGHTING=使用平面光照 §e[?]
+option.FLAT_LIGHTING.comment=关闭后,方块阴影将不再跟随太阳位置,与原版一致
+option.ENABLE_SHADOWS=启用阴影
+option.SHADOW_ENTITY=实体阴影
+value.SHADOW_ENTITY.-1=§a关闭
+value.SHADOW_ENTITY.0=§e仅玩家
+value.SHADOW_ENTITY.1=§e全部
+
+screen.REFLECTIONS_SCREEN=反射
+option.REFLECTIONS=反射不透明度
+option.BLOCK_REFLECTIONS=方块反射不透明度 §e[?]
+option.BLOCK_REFLECTIONS.comment=为石砖、石英等方块添加反射
+option.SSR_MAX_STEPS=最大步进次数
+option.SSR_BINARY_STEPS=最大细化次数
+option.SSR_STEP_SIZE=步进长度
+
+screen.OTHER_SCREEN=其他
+option.HIGHLIGHT_WAXED=高亮已打蜡方块 §e[?]
+option.HIGHLIGHT_WAXED.comment=手持蜜脾时高亮已打蜡的方块
+option.GLOWING_ORES=矿石发光
+option.NETHER_COLOR_GRADING=下界色彩校正
+option.HAND_DYNAMIC_LIGHTING=手持动态光照
+value.HAND_DYNAMIC_LIGHTING.-1=§a关闭
+value.HAND_DYNAMIC_LIGHTING.0=§e手持光源时
+value.HAND_DYNAMIC_LIGHTING.1=§e始终
