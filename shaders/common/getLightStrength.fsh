@@ -1,10 +1,7 @@
 #include "/common/getShadowDistortion.glsl"
 
-// the light that reaches a surface, as a colour instead of a single number: 1
-// is full light, 0 is full shadow. shadowtex1 only holds the opaque geometry,
-// shadowtex0 holds all of it, so when the first one is clear but the second is
-// not, the thing blocking the light is translucent - and then shadowcolor0
-// tells us how much light it filters and, in the coloured mode, with which tint
+// the light that reaches a surface, as a colour: shadowtex1 holds the opaque
+// geometry, shadowtex0 all of it, shadowcolor0 the tint of a translucent caster
 vec3 getLightStrength(float diffuse, float skyLight, vec3 feetPos) {
    // reduce diffuse with sky light
    diffuse *= rescale(skyLight, 0.3137, 0.6235);
@@ -35,9 +32,7 @@ vec3 getLightStrength(float diffuse, float skyLight, vec3 feetPos) {
       float shadowFade  = 1.0 - posDistance * INV_SHADOW_MAX_DIST_SQUARED;
       float depthScale  = 3.0 / shadowProjection[2].z;
 
-      // shadowtex0 holds every caster, shadowtex1 only the opaque ones. mode 0
-      // ignores translucent casters entirely, so glass and water do not block
-      // any light and only the opaque layer is allowed to count
+      // mode 0 ignores translucent casters, so only the opaque layer counts
       #if COLORED_SHADOWS > 0
          float casterDepth = texture2D(shadowtex0, shadowUV.st).x;
       #else
@@ -46,9 +41,8 @@ vec3 getLightStrength(float diffuse, float skyLight, vec3 feetPos) {
 
       float occlusion = clamp((casterDepth - shadowUV.z) * depthScale, 0.0, 1.0);
 
-      // an opaque caster stops the light completely: black. whatever is in
-      // shadowcolor0 belongs to the block in front, and it is only trusted when
-      // nothing opaque is there, so the two cases cannot be mixed up
+      // an opaque caster stops the light completely; shadowcolor0 is only trusted
+      // when nothing opaque is there
       vec3 blocker = vec3(0.0);
 
       #if COLORED_SHADOWS > 0
@@ -56,20 +50,13 @@ vec3 getLightStrength(float diffuse, float skyLight, vec3 feetPos) {
          float opaque = clamp((opaqueDepth - shadowUV.z) * depthScale, 0.0, 1.0);
 
          if (opaque <= 0.0) {
-            // shadowcolor0 carries the caster's own alpha, which is how much of
-            // the material is really there at this pixel: around 0.7 for a water
-            // surface, 1.0 for the frame of a glass block and 0 for the empty
-            // middle of one. that alpha is what decides how deep the shadow goes,
-            // so a transparent pixel fades the shadow out towards full light
-            // instead of just tinting it
+            // the caster's alpha is how much material is there (about 0.7 for
+            // water, 0 for the empty middle of glass), so a transparent pixel
+            // fades the shadow out instead of only tinting it
             vec4 caster = texture2D(shadowcolor0, shadowUV.st);
 
-            // FIXED LOOK VALUE - translucent shadow strength 0.55 (used to be
-            // SHADOW_TRANSLUCENT_STRENGTH): a fully opaque translucent caster
-            // passes 55% of the light. 0.0 = pitch black shadow, 1.0 = no
-            // shadow at all. mode 2 keeps the block's tint, mode 1 keeps only
-            // its luminance, so both darken equally and only mode 2 colours
-            // the shadow. caster.a above then fades it for transparent pixels.
+            // fixed look value: translucent shadow strength - a fully opaque caster
+            // passes 55% of the light; mode 2 keeps its tint, mode 1 its luminance
             #if COLORED_SHADOWS == 2
                vec3 tint = caster.rgb * 0.55;
             #else

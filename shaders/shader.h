@@ -5,11 +5,9 @@
 #define OVERWORLD_FOG_MIN_SLIDER 2 //[0 1 2 3 4 5 6 7 8 9 10]
 #define WEATHER_OPACITY 0.5 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 
-// the reflections are controlled per surface, there is no global opacity
-// anymore: the blocks scale their own reflectivity in textured_lit.fsh, the
-// water is scaled in final.fsh, both on the same 0-10 scale (10 = full)
-// these four values, together with the shadow settings below, are the MEDIUM
-// profile of shaders.properties - keep the two in sync
+// reflections are per surface, on a 0-10 scale: BLOCK_REFLECTIONS is baked into
+// each block's reflectivity in textured_lit.fsh, WATER_REFLECTION_STRENGTH is
+// applied in final.fsh. 0 disables both the value and the trace
 #define BLOCK_REFLECTIONS 5          //[0 1 2 3 4 5 6 7 8 9 10]
 #define WATER_REFLECTION_STRENGTH 5  //[0 1 2 3 4 5 6 7 8 9 10]
 #define SSR_MAX_STEPS 10     //[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 20 24 32 64 96 128 256 512]
@@ -18,20 +16,13 @@
 
 #define SHADOW_PIXEL 16     //[0 4 8 16 32 64 128 256 512 1024 2048]
 
-// translucent casters (glass, water and ice) have three modes:
-//   0 = do not render them at all, only opaque geometry casts a shadow
-//   1 = render them, but as a neutral grey filter: the shadow is as deep as
-//       the material is opaque and carries no colour from the block
-//   2 = render them with the block's own colour, as deep as it is opaque
-// modes 1 and 2 both cost two extra shadow map lookups per pixel. each profile
-// picks one of the three: LOW 0, MEDIUM 1 (also the default here), HIGH 2
+// translucent casters (glass, water, ice): 0 = none, 1 = grey shadow,
+// 2 = the block's own colour. 1 and 2 cost two extra shadow map lookups
 #define COLORED_SHADOWS 1 //[0 1 2]
 
 const int   shadowMapResolution = 1024;  //[256 512 1024 2048 3072 4096]
 const float shadowDistance      = 128.0; //[8.0 16.0 32.0 64.0 96.0 128.0 192.0 256.0 384.0 512.0 1024.0]
-// fixed at 2 blocks (Iris default): snapping removes shadow shimmer regardless
-// of the interval, and a small one keeps the player near the distortion focus.
-// no allowed-value list, so the option stays out of the settings menu
+// fixed at the Iris default: no allowed-value list, so it stays out of the menu
 const float shadowIntervalSize  = 2.0;
 const float shadowDistanceRenderMul = 1.0;
 const float entityShadowDistanceMul = 0.25; //[0.125 0.2 0.25 0.333 0.5 0.75 1.0]
@@ -46,10 +37,9 @@ const float sunPathRotation = -30.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.
 #define WATER_GLINT_CUTOFF 0.6     //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 #define WATER_GLINT_BRIGHTNESS 0.8 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0 1.05 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.55 1.6 1.65 1.7 1.75 1.8 1.85 1.9 1.95 2.0]
 
-// the clouds are still the vanilla ones: vanilla builds the geometry out of
-// the cloud texture, these options only change how it is shaded. the layer is
-// a slab of CLOUD_THICKNESS blocks starting at CLOUD_HEIGHT, which is what
-// tells a cloud's top face from its bottom one
+// the cloud geometry is vanilla, these options only shade it: the layer is a
+// slab of CLOUD_THICKNESS blocks starting at CLOUD_HEIGHT, which is what tells
+// a cloud's top face from its bottom one
 #define CLOUD_LIGHT_GAIN 0.5        //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0 1.05 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5]
 #define CLOUD_SILVER_LINING 0.5     //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 #define CLOUD_WEATHER_DARKNESS 0.15 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
@@ -72,9 +62,10 @@ const float sunPathRotation = -30.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.
    #define ENABLE_SHADOWS
 #endif
 
+// -1 = off, 0 = only while holding a light, 1 = always
 #define HAND_DYNAMIC_LIGHTING 0 //[-1 0 1]
 
-// optifine needs these to show on menu
+// empty #ifdef blocks: optifine only lists an option when its define is used
 #ifdef ENABLE_FOG
 #endif
 #ifdef ENABLE_SKY
@@ -94,15 +85,10 @@ const float sunPathRotation = -30.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.
 
 #define HALF_PI 1.570796326
 #define PI 3.141592653
-#define TAU 6.283185307
 #define SQRT_2 1.414213562
-#define NOON 0.25 // 6000
 #define SUNSET 0.5325 // 12780
 #define MIDNIGHT 0.75 // 18000
 #define SUNRISE 0.9675 // 23220
-
-const float INV_PI = 1.0 / PI;
-const float INV_TAU = 1.0 / TAU;
 
 const float NORMALIZE_TIME = 1.0/24000.0;
 
@@ -112,17 +98,9 @@ const float OVERWORLD_FOG_MAX = 1.0 - 0.1*OVERWORLD_FOG_MIN_SLIDER;
 const vec2 AMBIENT_UV = vec2(8.0/255.0, 247.0/255.0);
 const vec2 TORCH_UV_SCALE = vec2(8.0/255.0, 231.0/255.0);
 
-// FIXED LOOK VALUES are no longer declared here - each one is inlined at its
-// use site, with a "FIXED LOOK VALUE" comment explaining what it controls and
-// how to change it. index:
-//   torch ring colours .............. common/getTorchColor.fsh
-//   moon colour ..................... common/getLightColor.vsh
-//   translucent shadow strength .... common/getLightStrength.fsh
-//   shadow tint .................... program/textured_lit.fsh
-//   end ambient tint ............... program/textured_lit.vsh
-//   end star trail decay ........... world1/gbuffers_skytextured.fsh
-//   sunset cloud warmth ............ program/clouds.fsh
-// this file keeps only menu options, loader constants and derived values
+// fixed look values (colour constants without a menu option) live at their use
+// site, marked "fixed look value": torch rings, moon colour, translucent shadow
+// strength, shadow tint, end ambient, end star decay, sunset cloud warmth
 
 const float SHADOW_MAX_DIST_SQUARED = shadowDistance * shadowDistance;
 const float INV_SHADOW_MAX_DIST_SQUARED = 1.0/SHADOW_MAX_DIST_SQUARED;

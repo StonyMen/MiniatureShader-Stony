@@ -108,21 +108,13 @@ void main() {
    float albedoLuma = luma(albedo.rgb);
 
    #ifdef ENABLE_SHADOWS
-      // a colour, not a number: in the coloured mode a shadow under stained
-      // glass or water keeps the colour of that block, so shadowing and tinting
-      // are the same operation
+      // a colour, not a number: tinting and shadowing are the same operation
       vec3 lightStrength = getLightStrength(diffuse, lightUV.t, feetPos);
       float lightBrightness = max(0.0, LIGHT_BRIGHTNESS - 0.5*pow3(albedoLuma));
 
       lightStrength = max(lightStrength, 0.75*lightSourceLevel);
 
-      // FIXED LOOK VALUE - shadow tint (used to be the SHADOW_DARKNESS and
-      // SHADOW_BLUENESS sliders). darkness was 0.0, i.e. vec3(1.0 - 0.0):
-      // it never dimmed anything, so no subtraction remains and the base is
-      // plain white. blueness 0.2 added vec3(0, 0.3333, 1) * 0.2 to that,
-      // giving exactly vec3(1.0, 1.06666, 1.2) - a faint cool cast in shadow.
-      // lightStrength = 1 (fully lit) mixes back to pure white, 0 (shadow)
-      // keeps this tint. raise g/b for bluer shadows, set all to 1.0 for none.
+      // fixed look value: shadow tint - raise g/b for bluer shadows, 1.0 for none
       ambient.rgb *= mix(vec3(1.0, 1.06666, 1.2), vec3(1.0), lightStrength);
       ambient.rgb *= 0.75 + (lightBrightness * lightStrength) * lightColor;
    #endif

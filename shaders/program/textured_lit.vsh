@@ -7,7 +7,6 @@ attribute vec4 mc_Entity;
 #endif
 
 uniform float rainStrength;
-uniform float screenBrightness;
 uniform int isEyeInWater;
 uniform int worldTime;
 uniform vec3 sunPosition;
@@ -75,10 +74,8 @@ void main() {
    #endif
 
    #ifdef THE_END
-      // FIXED LOOK VALUE - end ambient tint (used to be END_AMBIENT). the
-      // End's fill light is this pale violet (0.83, 0.7, 1.0); the extra
-      // 0.02 * normal tilts it with the surface so differently facing blocks
-      // are not perfectly flat. edit the vec3 to re-tint the whole dimension.
+      // fixed look value: end ambient tint - the End's pale violet fill light,
+      // plus a small tilt so differently facing blocks are not perfectly flat
       endTint = vec3(0.83, 0.7, 1.0) + 0.02*(gl_NormalMatrix * gl_Normal).xyz;
    #endif
 
@@ -95,8 +92,7 @@ void main() {
       isOre = float(mc_Entity.x == 10014.0);
    #endif
 
-   bool isThin = mc_Entity.x == 10031.0 || mc_Entity.x == 10059.0
-              || mc_Entity.x == 10175.0 || mc_Entity.x == 10176.0;
+   bool isThin = mc_Entity.x == 10031.0 || mc_Entity.x == 10059.0;
 
    #ifndef FLAT_LIGHTING
       vec3 lightNormal = gl_NormalMatrix * gl_Normal;

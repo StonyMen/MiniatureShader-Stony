@@ -2,8 +2,6 @@
 
 #include "/shader.h"
 
-uniform int isEyeInWater;
-
 varying float fogMix;
 varying vec4 color;
 

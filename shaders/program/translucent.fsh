@@ -47,8 +47,8 @@ void main() {
 
       #define WATER_BUFFER color
 
-      // The biome tint is pulled towards its own luminance: 0 leaves the water
-      // completely colourless, 1 keeps the vanilla biome colour untouched.
+      // pull the biome tint towards its own luminance: 0 is colourless,
+      // 1 keeps the vanilla biome colour
       color.rgb = mix(vec3(luma(color.rgb)), color.rgb, WATER_SATURATION);
 
       WATER_BUFFER.a = min(WATER_BUFFER.a, WATER_A);

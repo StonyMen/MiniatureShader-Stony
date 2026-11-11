@@ -2,8 +2,6 @@
 
 #include "/shader.h"
 
-uniform int isEyeInWater;
-
 varying float fogMix;
 varying float cloudTopness;
 varying vec2 texUV;
@@ -26,9 +24,8 @@ void main() {
 	fogMix  = getFogMix(feetPos);
 	viewDir = normalize(viewPos);
 
-	// since 1.17 the cloud layer is a slab of CLOUD_THICKNESS blocks instead of
-	// a flat sheet, so the height of the fragment is all it takes to know
-	// whether this is the lit top of a cloud or its shaded underside
+	// the cloud layer is a slab, so the fragment height tells a lit top face from a
+	// shaded underside
 	float worldY = feetPos.y + cameraPosition.y;
 
 	cloudTopness = rescale(worldY, CLOUD_HEIGHT, CLOUD_HEIGHT + CLOUD_THICKNESS);

@@ -63,22 +63,10 @@ vec3 screen2view(vec2 uv, float depth) {
    return ndc2view(screen2ndc(vec3(uv, depth)));
 }
 
-vec3 screen2feet(vec2 uv, float depth) {
-   return view2feet(screen2view(uv, depth));
-}
-
-vec3 screen2world(vec2 uv, float depth) {
-   return feet2world(screen2feet(uv, depth));
-}
-
 vec3 view2ndc(vec3 view) {
    return nvec3(view2clip(view));
 }
 
 vec3 view2screen(vec3 view) {
    return ndc2screen(view2ndc(view));
-}
-
-vec3 world2view(vec3 world) {
-   return feet2view(world2feet(world));
 }

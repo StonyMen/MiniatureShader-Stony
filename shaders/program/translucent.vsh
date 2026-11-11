@@ -5,7 +5,6 @@ attribute vec4 mc_Entity;
 uniform float frameTimeCounter;
 uniform float rainStrength;
 uniform float screenBrightness;
-uniform int isEyeInWater;
 uniform int worldTime;
 uniform sampler2D lightmap;
 uniform vec3 sunPosition;

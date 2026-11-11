@@ -17,8 +17,8 @@ varying vec4 color;
 #include "/common/math.glsl"
 #include "/common/transformations.glsl"
 
-// one texel of the cloud texture is one cloud block, so a neighbour with an
-// empty alpha means this fragment sits on the edge of a block
+// one texel is one cloud block, so an empty alpha next to this one means we are
+// on the edge of a block
 float cloudEdge(vec2 uv) {
    float texel = 1.0/256.0;
    float around = texture2D(gtexture, uv + vec2(texel, 0.0)).a
@@ -32,10 +32,8 @@ float cloudEdge(vec2 uv) {
 void main() {
    vec4 albedo = texture2D(gtexture, texUV);
 
-   // the alpha channel is the shape of the cells: keep the edge hard, a soft
-   // one is what makes clouds look like fog instead of blocks. the threshold
-   // stays low on purpose, the mipmaps of the cloud texture blur the alpha at
-   // distance and dropping those fragments would punch holes in far clouds
+   // threshold kept low on purpose: mipmaps blur the alpha at distance and a
+   // higher cut would punch holes in far clouds
    if (albedo.a < 0.1) {
       discard;
    }
@@ -47,57 +45,39 @@ void main() {
    // the moon takes over once the sun is down, exactly like the vanilla light
    float lightDot = max(dot(dir, sunDir), dot(dir, moonDir));
 
-   // vanilla hands the clouds a colour that already carries the time of day,
-   // but it never says which of the two lights is the one doing the lighting,
-   // so the light itself stays white. these two colours put that back: the sun
-   // is warm, the moon is cold
+   // vanilla gives the cloud a colour but never says which light is doing the
+   // lighting, so the light colour is rebuilt here: the sun is warm, the moon cold
    float sunHeight = (mat3(gbufferModelViewInverse) * sunDir).y;
 
    // 1 while the sun is up, 0 once it is gone and only the moon is left
    float daylight = smoothstep(-0.08, 0.02, sunHeight);
 
-   // how low the sun is decides how warm its light is: a warm yellow overhead,
-   // orange only once it is close to the horizon. the range is kept short on
-   // purpose - spreading the warmth over the whole day turns the daylight red
-   // instead of yellow
+   // warm yellow overhead, orange only near the horizon; the range is short on
+   // purpose, spreading the warmth over the whole day turns daylight red
    float warmth = (1.0 - rescale(sunHeight, 0.0, 0.22)) * daylight;
 
-   // daylight is white with a hint of orange in it, not a yellow light: the
-   // blue channel stays high enough for the cloud to read as white
-   // FIXED LOOK VALUE - sunset cloud warmth 0.6 (used to be the
-   // CLOUD_SUN_TINT slider). warmth is 1 at the horizon and 0 once the sun is
-   // high; multiplying by this decides how much of the orange sunset colour
-   // gets mixed into the daylight white. 0.0 keeps daylight white all day,
-   // 1.0 gives the full orange right up to sunHeight 0.22. only the sun is
-   // affected - the moon keeps its own cold blue light.
+   // fixed look value: sunset cloud warmth - how much of the orange reaches the
+   // daylight white; 0.0 keeps it white all day, 1.0 gives full orange up to
+   // sunHeight 0.22. only the sun is affected
    vec3 sunColor  = mix(vec3(1.0, 0.86, 0.74),
                         vec3(1.0, 0.55, 0.32), warmth * 0.6);
 
-   // the moon is a mirror of the sun seen through a lot of air, so its light
-   // arrives dim and blue instead of white
+   // the moon is the sun seen through a lot of air: dim and blue
    vec3 moonColor = vec3(0.52, 0.70, 1.0);
 
    vec3 lightColor = mix(moonColor, sunColor, daylight);
 
-   // rain and thunder put a lid on the sky: there is no sun to reach the clouds
-   // any more, so they stop reacting to it and keep their flat vanilla colour
-   // until the weather clears up again
+   // rain puts a lid on the sky, so the cloud stops reacting to the light
    float clearSky = 1.0 - rainStrength;
 
-   // how much of that light a fragment catches, 0 to 1: the side of the cloud
-   // turned towards the sun gets all of it, and the underside less than the
-   // top because it looks away from the sky
+   // the underside catches less light than the top, it looks away from the sky
    float exposure = clamp(lightDot, 0.0, 1.0) * mix(0.6, 1.0, cloudTopness) * clearSky;
 
-   // the vanilla colour is the baseline and the light is only added on top of
-   // it, so a cloud that catches no light looks exactly like it does without
-   // the shader and only the lit part is pushed above it
+   // vanilla colour is the baseline, the light is only added on top of it
    vec3 cloudColor = albedo.rgb * color.rgb
                    * (1.0 + CLOUD_LIGHT_GAIN * exposure * lightColor);
 
-   // forward scattering: looking through a cloud towards the sun lights it up
-   // from the inside, and the rim of a block is where the most light gets
-   // through, so the edge is brightened on top of the flat faces
+   // forward scattering: the rim of a block is where the most light gets through
    float glow = pow(clamp(lightDot, 0.0, 1.0), 8.0);
    float edge = cloudEdge(texUV);
 
@@ -105,16 +85,13 @@ void main() {
 
    cloudColor *= 1.0 - rainStrength * CLOUD_WEATHER_DARKNESS;
 
-   // there is no tonemapper behind this pass, so everything above 1.0 is cut
-   // down to plain white and the colour of the light disappears exactly where
-   // the light is strongest. rolling the peak back to 1.0 keeps the hue, and
-   // fragments that stay below 1.0 - the whole shaded side - are left untouched
+   // no tonemapper behind this pass: rolling the peak back to 1.0 keeps the hue
+   // where it would otherwise clip to white
    float peak = max(cloudColor.r, max(cloudColor.g, cloudColor.b));
    cloudColor /= max(peak, 1.0);
 
-   // the distance is measured in the vertex shader already, and it has to be
-   // applied to the alpha as well: a cloud that is far enough has to dissolve
-   // into the sky instead of turning into a grey slab of fog colour
+   // the alpha has to fade too, or a far cloud turns into a grey slab of fog
+   // colour
    cloudColor = mix(cloudColor, fogColor, fogMix);
 
    /* DRAWBUFFERS:06 */

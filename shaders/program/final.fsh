@@ -20,9 +20,8 @@ void main() {
    float roughness = reflectivityAndRoughness.y;
 
    if (reflectivity > MIN_REFLECTIVITY && abs(reflectivityAndRoughness.z - 0.5) < 0.01) {
-      // the normal doesn't come premultiplied by the normal matrix to
-      // avoid the modelview transformations when view bobbing is on
-      // which causes severe artifacts when moving
+      // the normal is stored unpremultiplied: premultiplying it makes view
+      // bobbing show up as heavy artifacts when moving
       vec3 prenormal = screen2ndc(texture2D(colortex6, texUV).xyz);
 
       #if WATER_WAVE_SIZE > 0
@@ -45,17 +44,15 @@ void main() {
       normal += roughness * random3(stepify(worldPos, stepSize));
       normal = normalize(normal);
 
-      // the strength is set per surface: the blocks already bake
-      // BLOCK_REFLECTIONS into their reflectivity, the water has its own
-      // setting here
+      // per surface: the blocks bake BLOCK_REFLECTIONS into their reflectivity,
+      // the water is scaled here
       float reflectionStrength = reflectivity;
 
       if (reflectivity > WATER_REFLECTIVITY - 0.01) {
          reflectionStrength *= 0.1*WATER_REFLECTION_STRENGTH;
       }
 
-      // when underwater looking up at the water surface from below,
-      // there is nothing to reflect, so skip the reflection entirely
+      // looking up at the surface from below, there is nothing to reflect
       if ((isEyeInWater == 0 || feetPos.y <= 0.0) && reflectionStrength > 0.0) {
          vec4 reflectionColor = getReflectionColor(depth, normal, viewPos);
 
