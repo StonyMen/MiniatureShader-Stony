@@ -6,81 +6,104 @@ profile.HIGH=High
 
 # Light & shadows - left column: lighting
 screen.SHADOWS_SCREEN=Light & shadows
-option.LIGHT_BRIGHTNESS=Sun brightness
-option.FLAT_LIGHTING=Use flat lighting §e[?]
-option.FLAT_LIGHTING.comment=Without flat lighting, blocks will have shadows that do not match the sun's position, like in vanilla
-option.sunPathRotation=Sun path angle §e[!]
-option.sunPathRotation.comment=Miniature was designed with straight shadows in mind and may produce artifacts if changed
+option.LIGHT_BRIGHTNESS=Direct light brightness
+option.LIGHT_BRIGHTNESS.comment=Controls direct sun and moon light; higher is brighter
+option.FLAT_LIGHTING=Flat lighting
+option.FLAT_LIGHTING.comment=On: all faces lit equally; Off: shaded by orientation, like vanilla
+option.sunPathRotation=Sun path angle
+option.sunPathRotation.comment=Controls the sun and moon path angle; changes may cause artifacts
 
 # Light & shadows - right column: shadows
 option.ENABLE_SHADOWS=Enable shadows
-option.COLORED_SHADOWS=Translucent shadows §e[?]
-option.COLORED_SHADOWS.comment=Three modes: Off = glass, water and ice cast no shadow at all; Monochrome = they cast a neutral shadow with no colour tint; Coloured = the shadow carries the block's own colour. In both rendering modes the deeper the material, the darker the shadow. The Low, Medium and High profiles use these three modes respectively.
+option.ENABLE_SHADOWS.comment=On: shadows in the Overworld; Off: skips the shadow pass
+option.COLORED_SHADOWS=Translucent caster shadows
+option.COLORED_SHADOWS.comment=Three modes: Off casts nothing (Low); Monochrome darkens (Medium); Colored tints (High)
 value.COLORED_SHADOWS.0=§aOff
 value.COLORED_SHADOWS.1=§eMonochrome
-value.COLORED_SHADOWS.2=§eColoured
+value.COLORED_SHADOWS.2=§eColored
 option.SHADOW_ENTITY=Entity shadows
+option.SHADOW_ENTITY.comment=Three modes: Off; Player only; All entities
 value.SHADOW_ENTITY.-1=§aOff
 value.SHADOW_ENTITY.0=§ePlayer
-value.SHADOW_ENTITY.1=§eAll
+value.SHADOW_ENTITY.1=§eAll entities
 option.shadowDistance=Shadow distance
-option.entityShadowDistanceMul=Entity shadow distance §e[?]
-option.entityShadowDistanceMul.comment=As a percentage of shadow distance
-option.shadowMapResolution=Shadow resolution
-option.SHADOW_PIXEL=Shadow pixelization
+option.shadowDistance.comment=Controls the shadow radius in blocks; larger is farther and costs more
+option.entityShadowDistanceMul=Entity shadow distance multiplier
+option.entityShadowDistanceMul.comment=Scales entity shadow range against shadow distance; 0.25 means a quarter
+option.shadowMapResolution=Shadow map resolution
+option.shadowMapResolution.comment=Controls the shadow map size in pixels; higher is sharper and costs more
+option.SHADOW_PIXEL=Shadow pixelization grid
+option.SHADOW_PIXEL.comment=Controls the shadow sampling grid; higher is finer; 0 disables
 
-# Reflections (unchanged)
+# Reflections
 screen.REFLECTIONS_SCREEN=Reflections
 option.WATER_REFLECTION_STRENGTH=Water reflection strength
-option.WATER_REFLECTION_STRENGTH.comment=Strength of the screen space reflections on the water, independent of the blocks. Set to 0 to disable them.
-option.BLOCK_REFLECTIONS=Block reflection strength §e[?]
-option.BLOCK_REFLECTIONS.comment=Adds reflections to blocks such as stone bricks, quartz, etc. Set to 0 to disable them.
-option.SSR_MAX_STEPS=Maximum steps
-option.SSR_BINARY_STEPS=Maximum refining steps
-option.SSR_STEP_SIZE=Step size
+option.WATER_REFLECTION_STRENGTH.comment=Controls water screen space reflections; independent of blocks; 0 disables
+option.BLOCK_REFLECTIONS=Block reflection strength
+option.BLOCK_REFLECTIONS.comment=Controls reflections on blocks such as stone bricks and quartz; 0 disables
+option.SSR_STEP_SIZE=Reflection ray step size
+option.SSR_STEP_SIZE.comment=Controls the reflection ray step length; larger is farther but coarser
+option.SSR_MAX_STEPS=Reflection ray steps
+option.SSR_MAX_STEPS.comment=Limits reflection ray steps; higher is more complete and costs more
+option.SSR_BINARY_STEPS=Reflection hit refinement steps
+option.SSR_BINARY_STEPS.comment=Controls binary refinement after a hit; higher is more accurate
 
-# Water - left column: brightness / opacity / colour
+# Water - left column: brightness / opacity / color
 screen.WATER_SCREEN=Water
 option.WATER_BRIGHTNESS=Water brightness
-option.WATER_A=Water opacity
-option.WATER_SATURATION=Water surface color saturation §e[?]
-option.WATER_SATURATION.comment=0 makes the water completely colourless, 1 keeps the vanilla biome tint; brightness is preserved
+option.WATER_BRIGHTNESS.comment=Controls the base water brightness; adds to the glint
+option.WATER_A=Water opacity cap
+option.WATER_A.comment=Caps water opacity; lower is more transparent
+option.WATER_SATURATION=Water surface color saturation
+option.WATER_SATURATION.comment=Controls water surface color; 0 is grey, 1 is vanilla; brightness is unchanged
+
 # Water - right column: waves / glint
-option.WATER_WAVE_SIZE=Wave size
+option.WATER_WAVE_SIZE=Wave reach
+option.WATER_WAVE_SIZE.comment=Controls how far waves stay visible; higher is shorter
 option.WATER_WAVE_SPEED=Wave speed
+option.WATER_WAVE_SPEED.comment=Controls how fast waves move; higher is faster
 option.WATER_GLINT_CUTOFF=Water glint cutoff
-option.WATER_MIN_GLINT=Water glint strength §e[?]
-option.WATER_MIN_GLINT.comment=Determines how much texture the water retains; moving water still keeps all texture
+option.WATER_GLINT_CUTOFF.comment=Sets the glint threshold; higher keeps only the brightest texture
+option.WATER_MIN_GLINT=Still water texture strength
+option.WATER_MIN_GLINT.comment=Sets the minimum texture on still water; flowing water keeps it all; -1 removes it
 option.WATER_GLINT_BRIGHTNESS=Water glint brightness
+option.WATER_GLINT_BRIGHTNESS.comment=Controls water glint brightness; higher is brighter
 
 # Environment - left column: sky / clouds
 screen.ATMOSPHERE_SCREEN=Environment
-option.ENABLE_SKY=Enable sky §e[?]
-option.ENABLE_SKY.comment=Disable this option if you are using a sky resource pack
-option.WEATHER_OPACITY=Weather Opacity
-option.CLOUD_SUN_TINT=Sunset cloud colour
-option.CLOUD_SUN_TINT.comment=How strongly the low sun tints the clouds warm
-option.CLOUD_LIGHT_GAIN=Cloud sunlit brightness
-option.CLOUD_LIGHT_GAIN.comment=0 keeps every cloud at vanilla brightness, higher only brightens the side facing the light (the sun by day, the moon at night); the shaded side stays untouched
-option.CLOUD_SILVER_LINING=Cloud backlit rim §e[?]
-option.CLOUD_SILVER_LINING.comment=How bright the edges of a cloud get when you look towards the sun or the moon through it; 0 turns it off
-option.CLOUD_WEATHER_DARKNESS=Cloud rain darkness
-option.CLOUD_WEATHER_DARKNESS.comment=Applied on top of the vanilla rain darkening
+option.ENABLE_SKY=Enable custom sky and clouds
+option.ENABLE_SKY.comment=On: pack sky and cloud shading; Off: vanilla, and the four cloud options stop working
+option.WEATHER_OPACITY=Weather opacity
+option.WEATHER_OPACITY.comment=Controls weather particle opacity; higher is stronger; 0 hides them
+option.CLOUD_LIGHT_GAIN=Cloud sunlit gain
+option.CLOUD_LIGHT_GAIN.comment=Brightens the cloud face towards the light; the shaded side is unchanged
+option.CLOUD_SILVER_LINING=Cloud backlit rim brightness
+option.CLOUD_SILVER_LINING.comment=Controls the backlit cloud rim; 0 disables
+option.CLOUD_WEATHER_DARKNESS=Cloud rain darkening
+option.CLOUD_WEATHER_DARKNESS.comment=Extra cloud darkening in rain; higher is darker
 
 # Environment - right column: fog / end stars
 option.ENABLE_FOG=Enable fog
-option.OVERWORLD_FOG_MIN_SLIDER=Overworld fog
-option.OVERWORLD_FOG_MAX_SLIDER=Overworld transition fog §e[?]
-option.OVERWORLD_FOG_MAX_SLIDER.comment=Fog intensity during sunsets and sunrises
+option.ENABLE_FOG.comment=On: distance fog; Off: special effect fog still stays
+option.OVERWORLD_FOG_MIN_SLIDER=Overworld fog density
+option.OVERWORLD_FOG_MIN_SLIDER.comment=Controls normal Overworld fog density; higher is thicker
+option.OVERWORLD_FOG_MAX_SLIDER=Overworld sunset fog density
+option.OVERWORLD_FOG_MAX_SLIDER.comment=Controls Overworld fog density at sunrise and sunset; higher is thicker
 option.END_STARS_SPEED=End stars speed
-option.END_STARS_AMOUNT=End stars amount
+option.END_STARS_SPEED.comment=Controls how fast the End stars move; higher is faster
+option.END_STARS_AMOUNT=End stars density
+option.END_STARS_AMOUNT.comment=Controls End star density; higher gives more stars
 option.END_STARS_OPACITY=End stars opacity
+option.END_STARS_OPACITY.comment=Controls End stars opacity; 0 hides them
 
 # Other - every entry in the left column
 screen.OTHER_SCREEN=Other
-option.GLOWING_ORES=Glowing ores
-option.NETHER_COLOR_GRADING=Nether color grading
+option.GLOWING_ORES=Ore glow
+option.GLOWING_ORES.comment=Makes bright parts of ore textures glow slightly; does not emit light
+option.NETHER_COLOR_GRADING=Nether saturation grading
+option.NETHER_COLOR_GRADING.comment=On: desaturates dark Nether areas; Off: keeps the original colors
 option.HAND_DYNAMIC_LIGHTING=Hand dynamic lighting
+option.HAND_DYNAMIC_LIGHTING.comment=Three modes: Off; With a held light; Always on
 value.HAND_DYNAMIC_LIGHTING.-1=§aOff
 value.HAND_DYNAMIC_LIGHTING.0=§eWith light
 value.HAND_DYNAMIC_LIGHTING.1=§eAlways

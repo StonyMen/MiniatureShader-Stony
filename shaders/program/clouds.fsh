@@ -64,8 +64,14 @@ void main() {
 
    // daylight is white with a hint of orange in it, not a yellow light: the
    // blue channel stays high enough for the cloud to read as white
+   // FIXED LOOK VALUE - sunset cloud warmth 0.6 (used to be the
+   // CLOUD_SUN_TINT slider). warmth is 1 at the horizon and 0 once the sun is
+   // high; multiplying by this decides how much of the orange sunset colour
+   // gets mixed into the daylight white. 0.0 keeps daylight white all day,
+   // 1.0 gives the full orange right up to sunHeight 0.22. only the sun is
+   // affected - the moon keeps its own cold blue light.
    vec3 sunColor  = mix(vec3(1.0, 0.86, 0.74),
-                        vec3(1.0, 0.55, 0.32), warmth * CLOUD_SUN_TINT);
+                        vec3(1.0, 0.55, 0.32), warmth * 0.6);
 
    // the moon is a mirror of the sun seen through a lot of air, so its light
    // arrives dim and blue instead of white

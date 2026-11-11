@@ -4,83 +4,106 @@ profile.LOW=低
 profile.MEDIUM=中
 profile.HIGH=高
 
-# 光影 - 左列: 光照
+# 光影 - 左列：光照
 screen.SHADOWS_SCREEN=光影
-option.LIGHT_BRIGHTNESS=阳光亮度
-option.FLAT_LIGHTING=使用平面光照 §e[?]
-option.FLAT_LIGHTING.comment=关闭后,方块阴影将不再跟随太阳位置,与原版一致
-option.sunPathRotation=太阳轨道倾角 §e[!]
-option.sunPathRotation.comment=Miniature 的设计前提是阴影笔直,修改此值可能产生画面瑕疵
+option.LIGHT_BRIGHTNESS=直射光亮度
+option.LIGHT_BRIGHTNESS.comment=作用：太阳与月亮的直射光强度；越大越亮
+option.FLAT_LIGHTING=平面光照
+option.FLAT_LIGHTING.comment=开启：各面亮度一致；关闭：按朝向产生明暗，与原版一致
+option.sunPathRotation=太阳轨道倾角
+option.sunPathRotation.comment=作用：日月轨道倾角；改动可能产生画面瑕疵
 
-# 光影 - 右列: 阴影
+# 光影 - 右列：阴影
 option.ENABLE_SHADOWS=启用阴影
-option.COLORED_SHADOWS=透明方块阴影 §e[?]
-option.COLORED_SHADOWS.comment=三档:不渲染=玻璃、水和冰完全不投影;无色=透明方块会投影,但阴影不带方块颜色,只按材质深浅压暗;彩色=阴影带上方块自己的颜色。后两档中越不透明的部分阴影越深。低、中、高画质预设分别使用这三档
-value.COLORED_SHADOWS.0=§a不渲染
+option.ENABLE_SHADOWS.comment=开启：主世界渲染阴影；关闭：跳过阴影计算
+option.COLORED_SHADOWS=半透明物体阴影
+option.COLORED_SHADOWS.comment=三档：关闭不投影（低）；无色只压暗（中）；彩色带物体颜色（高）
+value.COLORED_SHADOWS.0=§a关闭
 value.COLORED_SHADOWS.1=§e无色
 value.COLORED_SHADOWS.2=§e彩色
 option.SHADOW_ENTITY=实体阴影
+option.SHADOW_ENTITY.comment=三档：关闭；仅玩家；全部实体
 value.SHADOW_ENTITY.-1=§a关闭
 value.SHADOW_ENTITY.0=§e仅玩家
-value.SHADOW_ENTITY.1=§e全部
+value.SHADOW_ENTITY.1=§e全部实体
 option.shadowDistance=阴影距离
-option.entityShadowDistanceMul=实体阴影距离 §e[?]
-option.entityShadowDistanceMul.comment=以阴影距离的百分比计算
-option.shadowMapResolution=阴影分辨率
-option.SHADOW_PIXEL=阴影像素化
+option.shadowDistance.comment=作用：以玩家为中心的阴影半径；越大越远、越吃性能
+option.entityShadowDistanceMul=实体阴影距离倍率
+option.entityShadowDistanceMul.comment=作用：实体投影范围占阴影距离的比例；0.25 即四分之一
+option.shadowMapResolution=阴影贴图分辨率
+option.shadowMapResolution.comment=作用：阴影贴图边长（像素）；越高越清晰、越吃显存
+option.SHADOW_PIXEL=阴影像素化网格密度
+option.SHADOW_PIXEL.comment=作用：阴影采样网格密度；越大越细、越不像素化；0 关闭
 
-# 反射 (未改动)
+# 反射
 screen.REFLECTIONS_SCREEN=反射
 option.WATER_REFLECTION_STRENGTH=水面反射强度
-option.WATER_REFLECTION_STRENGTH.comment=水面平面空间反射的强度, 与方块反射互相独立; 设为 0 即关闭水面反射
-option.BLOCK_REFLECTIONS=方块反射强度 §e[?]
-option.BLOCK_REFLECTIONS.comment=为石砖、石英等方块添加反射; 设为 0 即关闭
-option.SSR_MAX_STEPS=最大步进次数
-option.SSR_BINARY_STEPS=最大细化次数
-option.SSR_STEP_SIZE=步进长度
+option.WATER_REFLECTION_STRENGTH.comment=作用：水面屏幕空间反射强度；与方块反射独立；0 关闭
+option.BLOCK_REFLECTIONS=方块反射强度
+option.BLOCK_REFLECTIONS.comment=作用：石砖、石英等方块的反射强度；0 关闭
+option.SSR_STEP_SIZE=反射光线步长系数
+option.SSR_STEP_SIZE.comment=作用：反射光线每步的跨度；越大越远但更粗糙
+option.SSR_MAX_STEPS=反射光线最大步进次数
+option.SSR_MAX_STEPS.comment=作用：反射光线最大采样次数；越大越完整、越吃性能
+option.SSR_BINARY_STEPS=反射命中二分细化次数
+option.SSR_BINARY_STEPS.comment=作用：命中后的二分细化次数；越大边缘越准
 
-# 水面 - 左列: 亮度 / 不透明度 / 颜色
+# 水面 - 左列：亮度 / 不透明度 / 颜色
 screen.WATER_SCREEN=水面
 option.WATER_BRIGHTNESS=水面亮度
-option.WATER_A=水面不透明度
-option.WATER_SATURATION=水面颜色饱和度 §e[?]
-option.WATER_SATURATION.comment=0 为完全无色（灰），1 为原版生物群系水色;不影响亮度
-# 水面 - 右列: 波浪 / 波光
-option.WATER_WAVE_SIZE=波浪大小
+option.WATER_BRIGHTNESS.comment=作用：水面基础亮度；与波光亮度叠加
+option.WATER_A=水面不透明度上限
+option.WATER_A.comment=作用：水面不透明度上限；越小越透
+option.WATER_SATURATION=水面颜色饱和度
+option.WATER_SATURATION.comment=作用：水面颜色饱和度；0 无色，1 原版水色；不影响亮度
+
+# 水面 - 右列：波浪 / 波光
+option.WATER_WAVE_SIZE=波浪影响范围
+option.WATER_WAVE_SIZE.comment=作用：波浪可见范围；越大范围越小
 option.WATER_WAVE_SPEED=波浪速度
+option.WATER_WAVE_SPEED.comment=作用：波浪流动速度；越大越快
 option.WATER_GLINT_CUTOFF=水面波光阈值
-option.WATER_MIN_GLINT=水面波光强度 §e[?]
-option.WATER_MIN_GLINT.comment=决定水面保留多少纹理细节;流动的水始终保留完整纹理
+option.WATER_GLINT_CUTOFF.comment=作用：波光起始阈值；越高只留最亮的纹理
+option.WATER_MIN_GLINT=静止水面纹理保留量
+option.WATER_MIN_GLINT.comment=作用：静止水面纹理保留量；流动水面不受影响；-1 去除
 option.WATER_GLINT_BRIGHTNESS=水面波光亮度
+option.WATER_GLINT_BRIGHTNESS.comment=作用：水面波光亮度；越大越亮
 
-# 环境 - 左列: 天空 / 云
+# 环境 - 左列：天空 / 云
 screen.ATMOSPHERE_SCREEN=环境
-option.ENABLE_SKY=启用天空 §e[?]
-option.ENABLE_SKY.comment=如果你使用了天空资源包,请关闭此选项
+option.ENABLE_SKY=启用自定义天空与云
+option.ENABLE_SKY.comment=开启：使用本包天空与云着色；关闭：退回原版且云层四项失效
 option.WEATHER_OPACITY=天气效果不透明度
-option.CLOUD_SUN_TINT=日落云色
-option.CLOUD_SUN_TINT.comment=日出和日落时阳光把云染成暖色的强度
-option.CLOUD_LIGHT_GAIN=云的受光面亮度
-option.CLOUD_LIGHT_GAIN.comment=0 时所有云都保持原版亮度,调高只提亮朝向光源的那部分(白天是太阳,夜里是月亮),背光处不变
-option.CLOUD_SILVER_LINING=云的逆光边缘 §e[?]
-option.CLOUD_SILVER_LINING.comment=迎着太阳或月亮看时,被光透过的云边有多亮;设为 0 即关闭
-option.CLOUD_WEATHER_DARKNESS=雨天云的压暗
-option.CLOUD_WEATHER_DARKNESS.comment=在原版自身的雨天压暗之上再压一次
+option.WEATHER_OPACITY.comment=作用：天气粒子不透明度；越大越明显；0 隐藏
+option.CLOUD_LIGHT_GAIN=云层受光面增亮强度
+option.CLOUD_LIGHT_GAIN.comment=作用：云受光面提亮多少；背光面不变
+option.CLOUD_SILVER_LINING=云层逆光边缘亮度
+option.CLOUD_SILVER_LINING.comment=作用：逆光时云边亮度；0 关闭
+option.CLOUD_WEATHER_DARKNESS=雨天云层压暗强度
+option.CLOUD_WEATHER_DARKNESS.comment=作用：雨天云层额外压暗；越大越暗
 
-# 环境 - 右列: 雾 / 末地星辰
+# 环境 - 右列：雾 / 末地星辰
 option.ENABLE_FOG=启用雾
-option.OVERWORLD_FOG_MIN_SLIDER=主世界雾浓度
-option.OVERWORLD_FOG_MAX_SLIDER=主世界过渡雾 §e[?]
-option.OVERWORLD_FOG_MAX_SLIDER.comment=日出和日落时的雾浓度
+option.ENABLE_FOG.comment=开启：渲染距离雾；关闭：特殊状态雾仍保留
+option.OVERWORLD_FOG_MIN_SLIDER=主世界常规雾浓度
+option.OVERWORLD_FOG_MIN_SLIDER.comment=作用：平时的主世界雾浓度；越大越浓
+option.OVERWORLD_FOG_MAX_SLIDER=主世界日出日落雾浓度
+option.OVERWORLD_FOG_MAX_SLIDER.comment=作用：日出日落时的雾浓度；越大越浓
 option.END_STARS_SPEED=末地星辰移动速度
-option.END_STARS_AMOUNT=末地星辰数量
+option.END_STARS_SPEED.comment=作用：末地星辰移动速度；越大越快
+option.END_STARS_AMOUNT=末地星辰密度
+option.END_STARS_AMOUNT.comment=作用：末地星辰密度；越大越密
 option.END_STARS_OPACITY=末地星辰不透明度
+option.END_STARS_OPACITY.comment=作用：末地星辰不透明度；0 隐藏
 
 # 其他 - 全部条目在左列
 screen.OTHER_SCREEN=其他
-option.GLOWING_ORES=矿石发光
-option.NETHER_COLOR_GRADING=下界色彩校正
+option.GLOWING_ORES=矿石自发光
+option.GLOWING_ORES.comment=作用：矿石亮部微微发亮；不产生光照
+option.NETHER_COLOR_GRADING=下界饱和度校正
+option.NETHER_COLOR_GRADING.comment=开启：下界暗处降低饱和度；关闭：保留原色
 option.HAND_DYNAMIC_LIGHTING=手持动态光照
+option.HAND_DYNAMIC_LIGHTING.comment=三档：关闭；手持光源时；始终补光
 value.HAND_DYNAMIC_LIGHTING.-1=§a关闭
 value.HAND_DYNAMIC_LIGHTING.0=§e手持光源时
 value.HAND_DYNAMIC_LIGHTING.1=§e始终
