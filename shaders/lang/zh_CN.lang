@@ -4,52 +4,15 @@ profile.LOW=低
 profile.MEDIUM=中
 profile.HIGH=高
 
-screen.WATER_SCREEN=水面
-option.WATER_BRIGHTNESS=水面亮度
-option.WATER_SATURATION=水体颜色饱和度 §e[?]
-option.WATER_SATURATION.comment=0 为完全无色（灰），1 为原版生物群系水色;不影响亮度
-option.WATER_A=水面不透明度
-option.WATER_MIN_GLINT=水面波光强度 §e[?]
-option.WATER_MIN_GLINT.comment=决定水面保留多少纹理细节;流动的水始终保留完整纹理
-option.WATER_GLINT_BRIGHTNESS=水面波光亮度
-option.WATER_GLINT_CUTOFF=水面波光阈值
-option.WATER_WAVE_SIZE=波浪大小
-option.WATER_WAVE_SPEED=波浪速度
-
-screen.ATMOSPHERE_SCREEN=大气
-option.ENABLE_FOG=启用雾
-option.WEATHER_OPACITY=天气效果不透明度
-option.ENABLE_SKY=启用天空 §e[?]
-option.ENABLE_SKY.comment=如果你使用了天空资源包,请关闭此选项
-option.OVERWORLD_FOG_MAX_SLIDER=主世界过渡雾 §e[?]
-option.OVERWORLD_FOG_MAX_SLIDER.comment=日出和日落时的雾浓度
-option.OVERWORLD_FOG_MIN_SLIDER=主世界雾浓度
-option.CLOUD_SUN_TINT=日落云色
-option.CLOUD_SUN_TINT.comment=日出和日落时阳光把云染成暖色的强度
-option.CLOUD_LIGHT_GAIN=云的受光面亮度
-option.CLOUD_LIGHT_GAIN.comment=0 时所有云都保持原版亮度,调高只提亮朝向光源的那部分(白天是太阳,夜里是月亮),背光处不变
-option.CLOUD_SILVER_LINING=云的逆光边缘 §e[?]
-option.CLOUD_SILVER_LINING.comment=迎着太阳或月亮看时,被光透过的云边有多亮;设为 0 即关闭
-option.CLOUD_WEATHER_DARKNESS=雨天云的压暗
-option.CLOUD_WEATHER_DARKNESS.comment=在原版自身的雨天压暗之上再压一次
-option.END_STARS_SPEED=末地星辰移动速度
-option.END_STARS_AMOUNT=末地星辰数量
-option.END_STARS_OPACITY=末地星辰不透明度
-
-screen.SHADOWS_SCREEN=阴影
-option.shadowDistance=阴影距离
-option.shadowMapResolution=阴影分辨率
-option.shadowIntervalSize=阴影重聚焦间隔 §e[?]
-option.shadowIntervalSize.comment=阴影每隔多少格重新以玩家为中心进行一次聚焦
-option.entityShadowDistanceMul=实体阴影距离 §e[?]
-option.entityShadowDistanceMul.comment=以阴影距离的百分比计算
-option.SHADOW_PIXEL=阴影像素化
+# 光影 - 左列: 光照
+screen.SHADOWS_SCREEN=光影
 option.LIGHT_BRIGHTNESS=阳光亮度
-option.sunPathRotation=太阳轨道倾角 §e[!]
-option.sunPathRotation.comment=Miniature 的设计前提是阴影笔直,修改此值可能产生画面瑕疵
-option.SHADOW_DARKNESS=阴影深度
 option.FLAT_LIGHTING=使用平面光照 §e[?]
 option.FLAT_LIGHTING.comment=关闭后,方块阴影将不再跟随太阳位置,与原版一致
+option.sunPathRotation=太阳轨道倾角 §e[!]
+option.sunPathRotation.comment=Miniature 的设计前提是阴影笔直,修改此值可能产生画面瑕疵
+
+# 光影 - 右列: 阴影
 option.ENABLE_SHADOWS=启用阴影
 option.COLORED_SHADOWS=透明方块阴影 §e[?]
 option.COLORED_SHADOWS.comment=三档:不渲染=玻璃、水和冰完全不投影;无色=透明方块会投影,但阴影不带方块颜色,只按材质深浅压暗;彩色=阴影带上方块自己的颜色。后两档中越不透明的部分阴影越深。低、中、高画质预设分别使用这三档
@@ -60,7 +23,13 @@ option.SHADOW_ENTITY=实体阴影
 value.SHADOW_ENTITY.-1=§a关闭
 value.SHADOW_ENTITY.0=§e仅玩家
 value.SHADOW_ENTITY.1=§e全部
+option.shadowDistance=阴影距离
+option.entityShadowDistanceMul=实体阴影距离 §e[?]
+option.entityShadowDistanceMul.comment=以阴影距离的百分比计算
+option.shadowMapResolution=阴影分辨率
+option.SHADOW_PIXEL=阴影像素化
 
+# 反射 (未改动)
 screen.REFLECTIONS_SCREEN=反射
 option.WATER_REFLECTION_STRENGTH=水面反射强度
 option.WATER_REFLECTION_STRENGTH.comment=水面平面空间反射的强度, 与方块反射互相独立; 设为 0 即关闭水面反射
@@ -70,6 +39,44 @@ option.SSR_MAX_STEPS=最大步进次数
 option.SSR_BINARY_STEPS=最大细化次数
 option.SSR_STEP_SIZE=步进长度
 
+# 水面 - 左列: 亮度 / 不透明度 / 颜色
+screen.WATER_SCREEN=水面
+option.WATER_BRIGHTNESS=水面亮度
+option.WATER_A=水面不透明度
+option.WATER_SATURATION=水面颜色饱和度 §e[?]
+option.WATER_SATURATION.comment=0 为完全无色（灰），1 为原版生物群系水色;不影响亮度
+# 水面 - 右列: 波浪 / 波光
+option.WATER_WAVE_SIZE=波浪大小
+option.WATER_WAVE_SPEED=波浪速度
+option.WATER_GLINT_CUTOFF=水面波光阈值
+option.WATER_MIN_GLINT=水面波光强度 §e[?]
+option.WATER_MIN_GLINT.comment=决定水面保留多少纹理细节;流动的水始终保留完整纹理
+option.WATER_GLINT_BRIGHTNESS=水面波光亮度
+
+# 环境 - 左列: 天空 / 云
+screen.ATMOSPHERE_SCREEN=环境
+option.ENABLE_SKY=启用天空 §e[?]
+option.ENABLE_SKY.comment=如果你使用了天空资源包,请关闭此选项
+option.WEATHER_OPACITY=天气效果不透明度
+option.CLOUD_SUN_TINT=日落云色
+option.CLOUD_SUN_TINT.comment=日出和日落时阳光把云染成暖色的强度
+option.CLOUD_LIGHT_GAIN=云的受光面亮度
+option.CLOUD_LIGHT_GAIN.comment=0 时所有云都保持原版亮度,调高只提亮朝向光源的那部分(白天是太阳,夜里是月亮),背光处不变
+option.CLOUD_SILVER_LINING=云的逆光边缘 §e[?]
+option.CLOUD_SILVER_LINING.comment=迎着太阳或月亮看时,被光透过的云边有多亮;设为 0 即关闭
+option.CLOUD_WEATHER_DARKNESS=雨天云的压暗
+option.CLOUD_WEATHER_DARKNESS.comment=在原版自身的雨天压暗之上再压一次
+
+# 环境 - 右列: 雾 / 末地星辰
+option.ENABLE_FOG=启用雾
+option.OVERWORLD_FOG_MIN_SLIDER=主世界雾浓度
+option.OVERWORLD_FOG_MAX_SLIDER=主世界过渡雾 §e[?]
+option.OVERWORLD_FOG_MAX_SLIDER.comment=日出和日落时的雾浓度
+option.END_STARS_SPEED=末地星辰移动速度
+option.END_STARS_AMOUNT=末地星辰数量
+option.END_STARS_OPACITY=末地星辰不透明度
+
+# 其他 - 全部条目在左列
 screen.OTHER_SCREEN=其他
 option.GLOWING_ORES=矿石发光
 option.NETHER_COLOR_GRADING=下界色彩校正

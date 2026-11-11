@@ -4,52 +4,15 @@ profile.LOW=Low
 profile.MEDIUM=Medium
 profile.HIGH=High
 
-screen.WATER_SCREEN=Water
-option.WATER_BRIGHTNESS=Water brightness
-option.WATER_SATURATION=Water color saturation §e[?]
-option.WATER_SATURATION.comment=0 makes the water completely colourless, 1 keeps the vanilla biome tint; brightness is preserved
-option.WATER_A=Water opacity
-option.WATER_MIN_GLINT=Water glint strength §e[?]
-option.WATER_MIN_GLINT.comment=Determines how much texture the water retains; moving water still keeps all texture
-option.WATER_GLINT_BRIGHTNESS=Water glint brightness
-option.WATER_GLINT_CUTOFF=Water glint cutoff
-option.WATER_WAVE_SIZE=Wave size
-option.WATER_WAVE_SPEED=Wave speed
-
-screen.ATMOSPHERE_SCREEN=Atmosphere
-option.ENABLE_FOG=Enable fog
-option.WEATHER_OPACITY=Weather Opacity
-option.ENABLE_SKY=Enable sky §e[?]
-option.ENABLE_SKY.comment=Disable this option if you are using a sky resource pack
-option.OVERWORLD_FOG_MAX_SLIDER=Overworld transition fog §e[?]
-option.OVERWORLD_FOG_MAX_SLIDER.comment=Fog intensity during sunsets and sunrises
-option.OVERWORLD_FOG_MIN_SLIDER=Overworld fog
-option.CLOUD_SUN_TINT=Sunset cloud colour
-option.CLOUD_SUN_TINT.comment=How strongly the low sun tints the clouds warm
-option.CLOUD_LIGHT_GAIN=Cloud sunlit brightness
-option.CLOUD_LIGHT_GAIN.comment=0 keeps every cloud at vanilla brightness, higher only brightens the side facing the light (the sun by day, the moon at night); the shaded side stays untouched
-option.CLOUD_SILVER_LINING=Cloud backlit rim §e[?]
-option.CLOUD_SILVER_LINING.comment=How bright the edges of a cloud get when you look towards the sun or the moon through it; 0 turns it off
-option.CLOUD_WEATHER_DARKNESS=Cloud rain darkness
-option.CLOUD_WEATHER_DARKNESS.comment=Applied on top of the vanilla rain darkening
-option.END_STARS_SPEED=End stars speed
-option.END_STARS_AMOUNT=End stars amount
-option.END_STARS_OPACITY=End stars opacity
-
-screen.SHADOWS_SCREEN=Shadows
-option.shadowDistance=Shadow distance
-option.shadowMapResolution=Shadow resolution
-option.shadowIntervalSize=Shadow refocus rate §e[?]
-option.shadowIntervalSize.comment=Determines after how many blocks shadows refocus on the player
-option.entityShadowDistanceMul=Entity shadow distance §e[?]
-option.entityShadowDistanceMul.comment=As a percentage of shadow distance
-option.SHADOW_PIXEL=Shadow pixelization
+# Light & shadows - left column: lighting
+screen.SHADOWS_SCREEN=Light & shadows
 option.LIGHT_BRIGHTNESS=Sun brightness
-option.sunPathRotation=Sun path angle §e[!]
-option.sunPathRotation.comment=Miniature was designed with straight shadows in mind and may produce artifacts if changed
-option.SHADOW_DARKNESS=Shadow darkness
 option.FLAT_LIGHTING=Use flat lighting §e[?]
 option.FLAT_LIGHTING.comment=Without flat lighting, blocks will have shadows that do not match the sun's position, like in vanilla
+option.sunPathRotation=Sun path angle §e[!]
+option.sunPathRotation.comment=Miniature was designed with straight shadows in mind and may produce artifacts if changed
+
+# Light & shadows - right column: shadows
 option.ENABLE_SHADOWS=Enable shadows
 option.COLORED_SHADOWS=Translucent shadows §e[?]
 option.COLORED_SHADOWS.comment=Three modes: Off = glass, water and ice cast no shadow at all; Monochrome = they cast a neutral shadow with no colour tint; Coloured = the shadow carries the block's own colour. In both rendering modes the deeper the material, the darker the shadow. The Low, Medium and High profiles use these three modes respectively.
@@ -60,7 +23,13 @@ option.SHADOW_ENTITY=Entity shadows
 value.SHADOW_ENTITY.-1=§aOff
 value.SHADOW_ENTITY.0=§ePlayer
 value.SHADOW_ENTITY.1=§eAll
+option.shadowDistance=Shadow distance
+option.entityShadowDistanceMul=Entity shadow distance §e[?]
+option.entityShadowDistanceMul.comment=As a percentage of shadow distance
+option.shadowMapResolution=Shadow resolution
+option.SHADOW_PIXEL=Shadow pixelization
 
+# Reflections (unchanged)
 screen.REFLECTIONS_SCREEN=Reflections
 option.WATER_REFLECTION_STRENGTH=Water reflection strength
 option.WATER_REFLECTION_STRENGTH.comment=Strength of the screen space reflections on the water, independent of the blocks. Set to 0 to disable them.
@@ -70,6 +39,44 @@ option.SSR_MAX_STEPS=Maximum steps
 option.SSR_BINARY_STEPS=Maximum refining steps
 option.SSR_STEP_SIZE=Step size
 
+# Water - left column: brightness / opacity / colour
+screen.WATER_SCREEN=Water
+option.WATER_BRIGHTNESS=Water brightness
+option.WATER_A=Water opacity
+option.WATER_SATURATION=Water surface color saturation §e[?]
+option.WATER_SATURATION.comment=0 makes the water completely colourless, 1 keeps the vanilla biome tint; brightness is preserved
+# Water - right column: waves / glint
+option.WATER_WAVE_SIZE=Wave size
+option.WATER_WAVE_SPEED=Wave speed
+option.WATER_GLINT_CUTOFF=Water glint cutoff
+option.WATER_MIN_GLINT=Water glint strength §e[?]
+option.WATER_MIN_GLINT.comment=Determines how much texture the water retains; moving water still keeps all texture
+option.WATER_GLINT_BRIGHTNESS=Water glint brightness
+
+# Environment - left column: sky / clouds
+screen.ATMOSPHERE_SCREEN=Environment
+option.ENABLE_SKY=Enable sky §e[?]
+option.ENABLE_SKY.comment=Disable this option if you are using a sky resource pack
+option.WEATHER_OPACITY=Weather Opacity
+option.CLOUD_SUN_TINT=Sunset cloud colour
+option.CLOUD_SUN_TINT.comment=How strongly the low sun tints the clouds warm
+option.CLOUD_LIGHT_GAIN=Cloud sunlit brightness
+option.CLOUD_LIGHT_GAIN.comment=0 keeps every cloud at vanilla brightness, higher only brightens the side facing the light (the sun by day, the moon at night); the shaded side stays untouched
+option.CLOUD_SILVER_LINING=Cloud backlit rim §e[?]
+option.CLOUD_SILVER_LINING.comment=How bright the edges of a cloud get when you look towards the sun or the moon through it; 0 turns it off
+option.CLOUD_WEATHER_DARKNESS=Cloud rain darkness
+option.CLOUD_WEATHER_DARKNESS.comment=Applied on top of the vanilla rain darkening
+
+# Environment - right column: fog / end stars
+option.ENABLE_FOG=Enable fog
+option.OVERWORLD_FOG_MIN_SLIDER=Overworld fog
+option.OVERWORLD_FOG_MAX_SLIDER=Overworld transition fog §e[?]
+option.OVERWORLD_FOG_MAX_SLIDER.comment=Fog intensity during sunsets and sunrises
+option.END_STARS_SPEED=End stars speed
+option.END_STARS_AMOUNT=End stars amount
+option.END_STARS_OPACITY=End stars opacity
+
+# Other - every entry in the left column
 screen.OTHER_SCREEN=Other
 option.GLOWING_ORES=Glowing ores
 option.NETHER_COLOR_GRADING=Nether color grading

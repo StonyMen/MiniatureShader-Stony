@@ -1,4 +1,3 @@
-#define SHADOW_DARKNESS 0.0 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 #define LIGHT_BRIGHTNESS 0.8 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0 1.05 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5 1.55 1.6 1.65 1.7 1.75 1.8 1.85 1.9 1.95 2.0]
 
 #define ENABLE_FOG
@@ -30,7 +29,10 @@
 
 const int   shadowMapResolution = 1024;  //[256 512 1024 2048 3072 4096]
 const float shadowDistance      = 128.0; //[8.0 16.0 32.0 64.0 96.0 128.0 192.0 256.0 384.0 512.0 1024.0]
-const float shadowIntervalSize  = 7.0;  //[1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0]
+// fixed at 2 blocks (Iris default): snapping removes shadow shimmer regardless
+// of the interval, and a small one keeps the player near the distortion focus.
+// no allowed-value list, so the option stays out of the settings menu
+const float shadowIntervalSize  = 2.0;
 const float shadowDistanceRenderMul = 1.0;
 const float entityShadowDistanceMul = 0.25; //[0.125 0.2 0.25 0.333 0.5 0.75 1.0]
 const float sunPathRotation = -30.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.0 -55.0 -50.0 -45.0 -40.0 -35.0 -30.0 -25.0 -20.0 -15.0 -10.0 -5.0 0.0 5.0 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0 80.0 85.0 90.0]
@@ -113,13 +115,14 @@ const float OVERWORLD_FOG_MAX = 1.0 - 0.1*OVERWORLD_FOG_MIN_SLIDER;
 const vec2 AMBIENT_UV = vec2(8.0/255.0, 247.0/255.0);
 const vec2 TORCH_UV_SCALE = vec2(8.0/255.0, 231.0/255.0);
 
-// the torch rings, the moon colour and the shadow tint used to be menu sliders.
-// they are fixed constants now: they define the look of the pack, so change
-// them here in shader.h rather than in the options screen
+// the torch rings, the moon colour and the shadow tint (darkness + blueness)
+// used to be menu sliders. they are fixed constants now: they define the look
+// of the pack, so change them here in shader.h rather than in the options screen
 const vec3 TORCH_INNER_COLOR   = vec3(1.0, 0.85, 0.7);
 const vec3 TORCH_MIDDLE_COLOR  = vec3(1.0, 0.8,  0.6);
 const vec3 TORCH_OUTER_COLOR   = vec3(1.0, 0.55, 0.2);
 const vec3 MOON_COLOR          = vec3(0.1, 0.15, 0.3);
+const float SHADOW_DARKNESS    = 0.0;
 const float SHADOW_BLUENESS    = 0.2;
 
 const vec4 END_STARS_DRAG = vec4(200, 500, 100, 100);
