@@ -64,12 +64,16 @@ vec3 getLightStrength(float diffuse, float skyLight, vec3 feetPos) {
             // instead of just tinting it
             vec4 caster = texture2D(shadowcolor0, shadowUV.st);
 
-            // mode 2 keeps the block's tint; mode 1 keeps only its brightness,
-            // so the shadow is neutral grey but still as deep as the material
+            // FIXED LOOK VALUE - translucent shadow strength 0.55 (used to be
+            // SHADOW_TRANSLUCENT_STRENGTH): a fully opaque translucent caster
+            // passes 55% of the light. 0.0 = pitch black shadow, 1.0 = no
+            // shadow at all. mode 2 keeps the block's tint, mode 1 keeps only
+            // its luminance, so both darken equally and only mode 2 colours
+            // the shadow. caster.a above then fades it for transparent pixels.
             #if COLORED_SHADOWS == 2
-               vec3 tint = caster.rgb * SHADOW_TRANSLUCENT_STRENGTH;
+               vec3 tint = caster.rgb * 0.55;
             #else
-               vec3 tint = vec3(luma(caster.rgb) * SHADOW_TRANSLUCENT_STRENGTH);
+               vec3 tint = vec3(luma(caster.rgb) * 0.55);
             #endif
 
             blocker = mix(vec3(1.0), tint, caster.a);

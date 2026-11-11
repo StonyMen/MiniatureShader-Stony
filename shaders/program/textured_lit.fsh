@@ -116,7 +116,14 @@ void main() {
 
       lightStrength = max(lightStrength, 0.75*lightSourceLevel);
 
-      ambient.rgb *= mix(SHADOW_COLOR, vec3(1.0), lightStrength);
+      // FIXED LOOK VALUE - shadow tint (used to be the SHADOW_DARKNESS and
+      // SHADOW_BLUENESS sliders). darkness was 0.0, i.e. vec3(1.0 - 0.0):
+      // it never dimmed anything, so no subtraction remains and the base is
+      // plain white. blueness 0.2 added vec3(0, 0.3333, 1) * 0.2 to that,
+      // giving exactly vec3(1.0, 1.06666, 1.2) - a faint cool cast in shadow.
+      // lightStrength = 1 (fully lit) mixes back to pure white, 0 (shadow)
+      // keeps this tint. raise g/b for bluer shadows, set all to 1.0 for none.
+      ambient.rgb *= mix(vec3(1.0, 1.06666, 1.2), vec3(1.0), lightStrength);
       ambient.rgb *= 0.75 + (lightBrightness * lightStrength) * lightColor;
    #endif
 

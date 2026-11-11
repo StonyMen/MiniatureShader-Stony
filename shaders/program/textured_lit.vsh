@@ -75,7 +75,11 @@ void main() {
    #endif
 
    #ifdef THE_END
-      endTint = END_AMBIENT + 0.02*(gl_NormalMatrix * gl_Normal).xyz;
+      // FIXED LOOK VALUE - end ambient tint (used to be END_AMBIENT). the
+      // End's fill light is this pale violet (0.83, 0.7, 1.0); the extra
+      // 0.02 * normal tilts it with the surface so differently facing blocks
+      // are not perfectly flat. edit the vec3 to re-tint the whole dimension.
+      endTint = vec3(0.83, 0.7, 1.0) + 0.02*(gl_NormalMatrix * gl_Normal).xyz;
    #endif
 
    #if BLOCK_REFLECTIONS > 0

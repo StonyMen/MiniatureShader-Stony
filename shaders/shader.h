@@ -115,29 +115,16 @@ const float OVERWORLD_FOG_MAX = 1.0 - 0.1*OVERWORLD_FOG_MIN_SLIDER;
 const vec2 AMBIENT_UV = vec2(8.0/255.0, 247.0/255.0);
 const vec2 TORCH_UV_SCALE = vec2(8.0/255.0, 231.0/255.0);
 
-// the torch rings, the moon colour and the shadow tint (darkness + blueness)
-// used to be menu sliders. they are fixed constants now: they define the look
-// of the pack, so change them here in shader.h rather than in the options screen
-const vec3 TORCH_INNER_COLOR   = vec3(1.0, 0.85, 0.7);
-const vec3 TORCH_MIDDLE_COLOR  = vec3(1.0, 0.8,  0.6);
-const vec3 TORCH_OUTER_COLOR   = vec3(1.0, 0.55, 0.2);
-const vec3 MOON_COLOR          = vec3(0.1, 0.15, 0.3);
-const float SHADOW_DARKNESS    = 0.0;
-const float SHADOW_BLUENESS    = 0.2;
-
-const vec4 END_STARS_DRAG = vec4(200, 500, 100, 100);
-const vec3 END_AMBIENT    = vec3(0.83, 0.7, 1.0);
-
-const vec3 SHADOW_COLOR = vec3(1.0 - SHADOW_DARKNESS) + vec3(0.0, 0.3333, 1.0) * SHADOW_BLUENESS;
-
-// a translucent block does not block the light, it filters it: what reaches the
-// ground is the colour of the block, dimmed by this. mode 2 uses that colour,
-// mode 1 only its luminance, so both darken by the same amount and only mode 2
-// tints. 0 would turn translucent blocks into fully opaque casters, 1 would let
-// the same amount of light through as comes in. this is the value for a fully
-// opaque pixel - a transparent one scales the shadow down by its own alpha
-// first, so a water surface throws a fainter shadow than a glass frame
-const float SHADOW_TRANSLUCENT_STRENGTH = 0.55;
+// FIXED LOOK VALUES are no longer declared here - each one is inlined at its
+// use site, with a "FIXED LOOK VALUE" comment explaining what it controls and
+// how to change it. index:
+//   torch ring colours .............. common/getTorchColor.fsh
+//   moon colour ..................... common/getLightColor.vsh
+//   translucent shadow strength .... common/getLightStrength.fsh
+//   shadow tint .................... program/textured_lit.fsh
+//   end ambient tint ............... program/textured_lit.vsh
+//   end star trail decay ........... world1/gbuffers_skytextured.fsh
+// this file keeps only menu options, loader constants and derived values
 
 const float SHADOW_MAX_DIST_SQUARED = shadowDistance * shadowDistance;
 const float INV_SHADOW_MAX_DIST_SQUARED = 1.0/SHADOW_MAX_DIST_SQUARED;

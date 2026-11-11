@@ -28,7 +28,13 @@ void main() {
 
    slice *= offset;
 
-   vec4 stars = exp(fract(invDist + slice + time) * -END_STARS_DRAG) / invDist;
+   // FIXED LOOK VALUE - per-channel star trail decay (used to be
+   // END_STARS_DRAG). exp(-k * x) fades each streak along its length; the
+   // four k values are R,G,B,A, so the channels die at different rates and
+   // the streak picks up a colour shift. bigger k = shorter, sharper streaks,
+   // smaller k = longer, softer smears. this controls the SHAPE of the End
+   // stars only - count, speed and opacity are still menu sliders.
+   vec4 stars = exp(fract(invDist + slice + time) * -vec4(200, 500, 100, 100)) / invDist;
 
    gl_FragData[0] = albedo + clamp(stars, vec4(0.0), vec4(1.0)) * END_STARS_OPACITY;
 }
