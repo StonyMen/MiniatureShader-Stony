@@ -16,20 +16,6 @@ option.WATER_GLINT_CUTOFF=Water glint cutoff
 option.WATER_WAVE_SIZE=Wave size
 option.WATER_WAVE_SPEED=Wave speed
 
-screen.COLORS_SCREEN=Colors
-option.TORCH_INNER_R=Inner torch §cR
-option.TORCH_INNER_G=Inner torch §2G
-option.TORCH_INNER_B=Inner torch §9B
-option.TORCH_MIDDLE_R=Middle torch §cR
-option.TORCH_MIDDLE_G=Middle torch §2G
-option.TORCH_MIDDLE_B=Middle torch §9B
-option.TORCH_OUTER_R=Outer torch §cR
-option.TORCH_OUTER_G=Outer torch §2G
-option.TORCH_OUTER_B=Outer torch §9B
-option.MOON_R=Moon §cR
-option.MOON_G=Moon §2G
-option.MOON_B=Moon §9B
-
 screen.ATMOSPHERE_SCREEN=Atmosphere
 option.ENABLE_FOG=Enable fog
 option.WEATHER_OPACITY=Weather Opacity
@@ -51,7 +37,6 @@ option.END_STARS_AMOUNT=End stars amount
 option.END_STARS_OPACITY=End stars opacity
 
 screen.SHADOWS_SCREEN=Shadows
-option.SHADOW_BLUENESS=Shadow blueness
 option.shadowDistance=Shadow distance
 option.shadowMapResolution=Shadow resolution
 option.shadowIntervalSize=Shadow refocus rate §e[?]

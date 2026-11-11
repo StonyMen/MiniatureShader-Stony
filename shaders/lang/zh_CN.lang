@@ -16,20 +16,6 @@ option.WATER_GLINT_CUTOFF=水面波光阈值
 option.WATER_WAVE_SIZE=波浪大小
 option.WATER_WAVE_SPEED=波浪速度
 
-screen.COLORS_SCREEN=颜色
-option.TORCH_INNER_R=火把内圈 §c红
-option.TORCH_INNER_G=火把内圈 §2绿
-option.TORCH_INNER_B=火把内圈 §9蓝
-option.TORCH_MIDDLE_R=火把中圈 §c红
-option.TORCH_MIDDLE_G=火把中圈 §2绿
-option.TORCH_MIDDLE_B=火把中圈 §9蓝
-option.TORCH_OUTER_R=火把外圈 §c红
-option.TORCH_OUTER_G=火把外圈 §2绿
-option.TORCH_OUTER_B=火把外圈 §9蓝
-option.MOON_R=月亮 §c红
-option.MOON_G=月亮 §2绿
-option.MOON_B=月亮 §9蓝
-
 screen.ATMOSPHERE_SCREEN=大气
 option.ENABLE_FOG=启用雾
 option.WEATHER_OPACITY=天气效果不透明度
@@ -51,7 +37,6 @@ option.END_STARS_AMOUNT=末地星辰数量
 option.END_STARS_OPACITY=末地星辰不透明度
 
 screen.SHADOWS_SCREEN=阴影
-option.SHADOW_BLUENESS=阴影蓝色程度
 option.shadowDistance=阴影距离
 option.shadowMapResolution=阴影分辨率
 option.shadowIntervalSize=阴影重聚焦间隔 §e[?]

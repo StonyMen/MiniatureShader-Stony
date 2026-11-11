@@ -6,19 +6,6 @@
 #define OVERWORLD_FOG_MIN_SLIDER 2 //[0 1 2 3 4 5 6 7 8 9 10]
 #define WEATHER_OPACITY 0.5 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 
-#define TORCH_INNER_R 1.0  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define TORCH_INNER_G 0.85 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define TORCH_INNER_B 0.7  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define TORCH_MIDDLE_R 1.0 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define TORCH_MIDDLE_G 0.8 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define TORCH_MIDDLE_B 0.6 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define TORCH_OUTER_R 1.0  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define TORCH_OUTER_G 0.55 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define TORCH_OUTER_B 0.2  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define MOON_R 0.1  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define MOON_G 0.15 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define MOON_B 0.3  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-
 // the reflections are controlled per surface, there is no global opacity
 // anymore: the blocks scale their own reflectivity in textured_lit.fsh, the
 // water is scaled in final.fsh, both on the same 0-10 scale (10 = full)
@@ -31,7 +18,6 @@
 #define SSR_BINARY_STEPS 4   //[1 2 3 4 5 6 7 8 9 10]
 
 #define SHADOW_PIXEL 16     //[0 4 8 16 32 64 128 256 512 1024 2048]
-#define SHADOW_BLUENESS 0.2 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5]
 
 // translucent casters (glass, water and ice) have three modes:
 //   0 = do not render them at all, only opaque geometry casts a shadow
@@ -126,10 +112,15 @@ const float OVERWORLD_FOG_MAX = 1.0 - 0.1*OVERWORLD_FOG_MIN_SLIDER;
 
 const vec2 AMBIENT_UV = vec2(8.0/255.0, 247.0/255.0);
 const vec2 TORCH_UV_SCALE = vec2(8.0/255.0, 231.0/255.0);
-const vec3 TORCH_INNER_COLOR = vec3(TORCH_INNER_R, TORCH_INNER_G, TORCH_INNER_B);
-const vec3 TORCH_MIDDLE_COLOR = vec3(TORCH_MIDDLE_R, TORCH_MIDDLE_G, TORCH_MIDDLE_B);
-const vec3 TORCH_OUTER_COLOR = vec3(TORCH_OUTER_R, TORCH_OUTER_G, TORCH_OUTER_B);
-const vec3 MOON_COLOR = vec3(MOON_R, MOON_G, MOON_B);
+
+// the torch rings, the moon colour and the shadow tint used to be menu sliders.
+// they are fixed constants now: they define the look of the pack, so change
+// them here in shader.h rather than in the options screen
+const vec3 TORCH_INNER_COLOR   = vec3(1.0, 0.85, 0.7);
+const vec3 TORCH_MIDDLE_COLOR  = vec3(1.0, 0.8,  0.6);
+const vec3 TORCH_OUTER_COLOR   = vec3(1.0, 0.55, 0.2);
+const vec3 MOON_COLOR          = vec3(0.1, 0.15, 0.3);
+const float SHADOW_BLUENESS    = 0.2;
 
 const vec4 END_STARS_DRAG = vec4(200, 500, 100, 100);
 const vec3 END_AMBIENT    = vec3(0.83, 0.7, 1.0);
