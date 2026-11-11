@@ -107,3 +107,5 @@ option.HAND_DYNAMIC_LIGHTING.comment=三档：关闭；手持光源时；始终�
 value.HAND_DYNAMIC_LIGHTING.-1=§a关闭
 value.HAND_DYNAMIC_LIGHTING.0=§e手持光源时
 value.HAND_DYNAMIC_LIGHTING.1=§e始终
+option.END_PORTAL=末地传送门改进
+option.END_PORTAL.comment=开启：图案锚定在方块上重绘，不做屏幕投射，转视角不会滑动；关闭：与原版一致，按屏幕投射，不做任何改动

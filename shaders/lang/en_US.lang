@@ -107,3 +107,5 @@ option.HAND_DYNAMIC_LIGHTING.comment=Three modes: Off; With a held light; Always
 value.HAND_DYNAMIC_LIGHTING.-1=§aOff
 value.HAND_DYNAMIC_LIGHTING.0=§eWith light
 value.HAND_DYNAMIC_LIGHTING.1=§eAlways
+option.END_PORTAL=End portal improvement
+option.END_PORTAL.comment=On: repainted anchored to the block, not screen projected, so the pattern does not slide when you turn; Off: vanilla, screen projected, left untouched
