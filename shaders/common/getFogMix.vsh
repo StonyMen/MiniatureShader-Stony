@@ -23,35 +23,28 @@ float getFogMix(vec3 feetPos) {
       }
    #endif
 
-   #if MC_VERSION >= 11700
-      if (fogEnd < far) {
-         // a fog effect (like blindness) is active
-         return calcFogMix(feetPos, 1.0, far);
-      }
+   if (fogEnd < far) {
+      // a fog effect (like blindness) is active
+      return calcFogMix(feetPos, 1.0, far);
+   }
 
-      #if defined GBUFFERS_SKYBASIC
-         return 0.0;
-      #elif defined GBUFFERS_CLOUDS
-         return clamp((length(feetPos) - far) * (near * 0.01), 0.0, 1.0);
-      #else
-         #ifdef OVERWORLD
-            float x = worldTime * NORMALIZE_TIME;
-
-            x = clamp(25.0*(x < MIDNIGHT ? SUNSET - x : x - SUNRISE) + 0.3,
-                     OVERWORLD_FOG_MIN,
-                     OVERWORLD_FOG_MAX);
-
-            x = min(x, 1.0 - rainStrength);
-         #else
-            float x = 1.0;
-         #endif
-
-         return calcFogMix(feetPos, x, far);
-      #endif
+   #if defined GBUFFERS_SKYBASIC
+      return 0.0;
+   #elif defined GBUFFERS_CLOUDS
+      return clamp((length(feetPos) - far) * (near * 0.01), 0.0, 1.0);
    #else
-      gl_FogFragCoord = length(feetPos);
+      #ifdef OVERWORLD
+         float x = worldTime * NORMALIZE_TIME;
 
-      return (isEyeInWater > 0) ? 1.0 - exp(-gl_FogFragCoord * gl_Fog.density)
-                                : clamp((gl_FogFragCoord - gl_Fog.start) * gl_Fog.scale, 0.0, 1.0);
+         x = clamp(25.0*(x < MIDNIGHT ? SUNSET - x : x - SUNRISE) + 0.3,
+                  OVERWORLD_FOG_MIN,
+                  OVERWORLD_FOG_MAX);
+
+         x = min(x, 1.0 - rainStrength);
+      #else
+         float x = 1.0;
+      #endif
+
+      return calcFogMix(feetPos, x, far);
    #endif
 }

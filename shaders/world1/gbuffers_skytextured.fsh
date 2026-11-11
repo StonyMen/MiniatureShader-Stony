@@ -15,9 +15,7 @@ varying vec4 color;
 void main() {
    vec4 albedo = texture2D(gtexture, texUV) * color;
 
-   #if MC_VERSION >= 12100
-      albedo.rgb = mix(albedo.rgb, albedo.rgb * fogColor, 0.9);
-   #endif
+   albedo.rgb = mix(albedo.rgb, albedo.rgb * fogColor, 0.9);
 
    float theta   = mod(atan(feetPos.y, feetPos.x), PI) - HALF_PI;
    float phi     = acos(feetPos.z / length(feetPos))   - HALF_PI;

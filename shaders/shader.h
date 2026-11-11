@@ -72,9 +72,7 @@ const float sunPathRotation = -30.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.
    #define ENABLE_SHADOWS
 #endif
 
-#if MC_VERSION >= 11300
-   #define HAND_DYNAMIC_LIGHTING 0 //[-1 0 1]
-#endif
+#define HAND_DYNAMIC_LIGHTING 0 //[-1 0 1]
 
 // optifine needs these to show on menu
 #ifdef ENABLE_FOG

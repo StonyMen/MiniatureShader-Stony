@@ -42,14 +42,10 @@ void main() {
    #endif
 
    if (reflectivity > WATER_REFLECTIVITY - 0.01) {
-      #if MC_VERSION >= 11300
-         albedo.rgb = rescale(albedo.rgb * waterTexStrength, vec3(WATER_GLINT_CUTOFF), vec3(1.0));
-         albedo.rgb = vec3(WATER_BRIGHTNESS) + WATER_GLINT_BRIGHTNESS * albedo.rgb;
+      albedo.rgb = rescale(albedo.rgb * waterTexStrength, vec3(WATER_GLINT_CUTOFF), vec3(1.0));
+      albedo.rgb = vec3(WATER_BRIGHTNESS) + WATER_GLINT_BRIGHTNESS * albedo.rgb;
 
-         #define WATER_BUFFER color
-      #else
-         #define WATER_BUFFER albedo
-      #endif
+      #define WATER_BUFFER color
 
       // The biome tint is pulled towards its own luminance: 0 leaves the water
       // completely colourless, 1 keeps the vanilla biome colour untouched.
