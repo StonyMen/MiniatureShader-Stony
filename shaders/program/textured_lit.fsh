@@ -216,6 +216,19 @@ void main() {
       );
    #endif
 
+   // enchantment glint: Iris no longer draws the glint as a pass of its own, the
+   // glint sampler rides along with the item/entity draw, so it has to be added
+   // here or enchanted items and worn armor lose the effect entirely. vanilla
+   // squares the modulated sample (its "Matches BlendFunction.GLINT" curve) and
+   // applies it after the lightmap, before fog - same place as this
+   #ifdef IRIS_INLINE_GLINT
+      if (mc_hasGlint()) {
+         vec3 glint = mc_sampleGlint();
+
+         albedo.rgb += glint * glint;
+      }
+   #endif
+
    albedo.rgb = mix(albedo.rgb, gradientFogColor, fogMix);
 
    /* DRAWBUFFERS:067 */
